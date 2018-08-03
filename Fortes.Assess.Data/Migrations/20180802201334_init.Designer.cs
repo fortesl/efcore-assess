@@ -4,14 +4,16 @@ using Fortes.Assess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fortes.Assess.Data.Migrations
 {
     [DbContext(typeof(AssessDbContext))]
-    partial class AssessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180802201334_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,7 +29,7 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("AssessmentId");
 
-                    b.Property<string>("Body");
+                    b.Property<string>("Content");
 
                     b.Property<string>("Footer");
 
@@ -348,7 +350,7 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("AssessmentId");
 
-                    b.Property<string>("Body");
+                    b.Property<string>("Content");
 
                     b.Property<string>("Footer");
 

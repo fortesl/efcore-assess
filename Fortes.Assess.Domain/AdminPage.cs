@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Fortes.Assess.Domain
+﻿namespace Fortes.Assess.Domain
 {
     public class AdminPage
     {
         public int Id { get; set; }
         public int AssessmentId { get; set; }
-        public string title { get; set; }
-        public string header { get; set; }
-        public string content { get; set; }
-        public string footer { get; set; }
+        public Assessment Assessment { get; set; }
+        public string Title { get; set; }
+        public string Header { get; set; }
+        public string Body { get; set; }
+        public string Footer { get; set; }
     }
 }

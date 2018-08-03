@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Security.Principal;
 using System.Text;
 
 namespace Fortes.Assess.Domain
@@ -8,5 +10,6 @@ namespace Fortes.Assess.Domain
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public List<Question> Questions { get; set; }
     }
 }

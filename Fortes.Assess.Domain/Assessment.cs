@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Fortes.Assess.Domain
 {
@@ -7,14 +8,17 @@ namespace Fortes.Assess.Domain
     {
         public Assessment()
         {
-            Questions = new List<Question>();
+            Questions = new List<AssessmentQuestion>();
+            Users = new List<AssessmentUser>();
         }
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int PassingGrade { get; set; }
         public int AdminPageId { get; set; }
+        public AdminPage AdminPage { get; set; }
+        public UserPage UserPage { get; set; }
         public int UserPageId { get; set; }
         public string FieldId { get; set; }
         public string CompanyId { get; set; }
@@ -23,7 +27,8 @@ namespace Fortes.Assess.Domain
         public string ProgrammingLanguageId { get; set; }
         public string LevelId { get; set; }
         public string OccupationId { get; set; }
-        public List<Question> Questions { get; set; }
-        public int UserID { get; set; }
+        public string DurationId { get; set; }
+        public List<AssessmentQuestion> Questions { get; set; }
+        public List<AssessmentUser> Users { get; set; }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Fortes.Assess.Domain
 {
-    class Framework
+    public class Framework
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public List<Assessment> Assessments { get; set; }
     }
 }

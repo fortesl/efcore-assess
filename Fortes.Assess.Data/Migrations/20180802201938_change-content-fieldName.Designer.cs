@@ -4,14 +4,16 @@ using Fortes.Assess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fortes.Assess.Data.Migrations
 {
     [DbContext(typeof(AssessDbContext))]
-    partial class AssessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180802201938_change-content-fieldName")]
+    partial class changecontentfieldName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

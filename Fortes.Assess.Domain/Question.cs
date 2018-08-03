@@ -9,6 +9,7 @@ namespace Fortes.Assess.Domain
         public Question()
         {
             Options = new List<Option>();
+            AssessmentQuestions = new List<AssessmentQuestion>();
         }
         public string Id { get; set; }
         public List<Tag> Tags { get; set; }
@@ -19,7 +20,7 @@ namespace Fortes.Assess.Domain
         public string LevelId { get; set; }
         public string TypeId { get; set; }
         public List<Option> Options { get; set; }
-        public int AssessmentId { get; set; }
+        public List<AssessmentQuestion> AssessmentQuestions { get; set; }
     }
 
     public class Option
