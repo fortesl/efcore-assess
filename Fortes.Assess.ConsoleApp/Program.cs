@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Fortes.Assess.Data;
 using Fortes.Assess.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fortes.Assess.ConsoleApp
 {
     class Program
     {
-        private static AssessDbContext _context = new AssessDbContext();
+        private static readonly string _connectionString = "Server=(localdb)\\mssqllocaldb; Database=Assessment;Trusted_Connection=True;";
+
+        private static AssessDbContext _context = new AssessDbContext(_connectionString);
 
         static void Main(string[] args)
         {
             _context.Database.EnsureCreated();
             //        GetLevels();
-            //InsertOneToMany();
-            // InsertOneToOne();
-            InsertManyToMany();
+ //           InsertOneToMany();
+ //           InsertOneToOne();
+ //          InsertManyToMany();
+            GetRelatedData();
         }
 
         private static void InsertLevel()
@@ -79,6 +82,17 @@ namespace Fortes.Assess.ConsoleApp
             };
             _context.Assessments.Add(assessment);
             _context.SaveChanges();
+        }
+
+        private static void GetRelatedData()
+        {
+            var assessment = _context.Assessments.Include(a => a.AdminPage).FirstOrDefault();
+            Console.WriteLine(assessment);
+            _context.Entry(assessment)
+                .Collection(a => a.AssessmentQuestions)
+                .Query()
+                .Load();
+            Console.WriteLine(assessment);
         }
 
         private static void InsertManyToMany()

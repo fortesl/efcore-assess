@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
 using Fortes.Assess.Domain;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -7,10 +10,31 @@ namespace Fortes.Assess.Data
 {
     public class AssessDbContext : DbContext
     {
+        private static string _connectionString;
+
         public static readonly LoggerFactory MyLoggerFactory
-            = new LoggerFactory(new[] { new ConsoleLoggerProvider((_, __) => true, true) });
+            = new LoggerFactory(new[]
+            {
+                new ConsoleLoggerProvider((category, level) 
+                    => category == DbLoggerCategory.Database.Command.Name
+                        && level == LogLevel.Information, true) 
 
+            }); 
 
+        public AssessDbContext(DbContextOptions<AssessDbContext> options)
+            : base(options)
+        {
+        }
+
+        public AssessDbContext(string connectionString)
+        {
+            if (!string.IsNullOrEmpty(connectionString) && !string.IsNullOrWhiteSpace(connectionString))
+            {
+                _connectionString = connectionString;
+            }                
+        }
+
+        #region dbsets
         public DbSet<Assessment> Assessments { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -28,16 +52,24 @@ namespace Fortes.Assess.Data
         public DbSet<AdminPage> AdminPages { get; set; }
         public DbSet<UserPage> UserPages { get; set; }
         public DbSet<AssessmentQuestion> AssessmentQuestion { get; set; }
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-                .UseLoggerFactory(MyLoggerFactory)
-                .UseSqlServer("Server = (localdb)\\mssqllocaldb; Database= Assessment; Trusted_Connection=True;");
+            if (optionsBuilder.IsConfigured) return;
+            if (!string.IsNullOrEmpty(_connectionString))
+            {
+                optionsBuilder
+                    .UseSqlServer(_connectionString)
+                    .UseLoggerFactory(MyLoggerFactory);
+
+            }
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //many-to-many keys
             modelBuilder.Entity<AssessmentQuestion>()
                 .HasKey(s => new {s.AssessmentId, s.QuestionId});
             modelBuilder.Entity<UserRole>()
@@ -45,10 +77,29 @@ namespace Fortes.Assess.Data
             modelBuilder.Entity<AssessmentUser>()
                 .HasKey(s => new {s.AssessmentId, s.UserId});
             modelBuilder.Entity<QuestionTag>()
-                .HasKey(s => new { s.QuestionId, s.TagId });
+                .HasKey(s => new {s.QuestionId, s.TagId});
 
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                //Shadow state properties
+                modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified");
+
+                //ignore
+                modelBuilder.Entity(entityType.Name).Ignore("IsDirty");
+            }
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            {
+                entry.Property("LastModified").CurrentValue = DateTime.Now;
+//                ((ClientChangeTracker) entry.Entity).IsDirty = false;
+            }
+            return base.SaveChanges();
         }
 
     }

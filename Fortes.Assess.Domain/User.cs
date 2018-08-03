@@ -13,7 +13,7 @@ namespace Fortes.Assess.Domain
         public string Name { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public string email { get; set; }
+        public string Email { get; set; }
         public string CompanyId { get; set; }
         public List<UserRole> UserRoles { get; set; }
         public List<AssessmentUser> UserAssessments { get; set; }
