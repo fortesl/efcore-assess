@@ -4,14 +4,16 @@ using Fortes.Assess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fortes.Assess.Data.Migrations
 {
     [DbContext(typeof(AssessDbContext))]
-    partial class AssessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180803022036_fix-relationship")]
+    partial class fixrelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,8 +49,6 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("AdminPageId");
 
-                    b.Property<int?>("AdminPageId1");
-
                     b.Property<string>("CompanyId");
 
                     b.Property<string>("Description");
@@ -75,11 +75,7 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("UserPageId");
 
-                    b.Property<int?>("UserPageId1");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AdminPageId1");
 
                     b.HasIndex("CompanyId");
 
@@ -96,8 +92,6 @@ namespace Fortes.Assess.Data.Migrations
                     b.HasIndex("OccupationId");
 
                     b.HasIndex("ProgrammingLanguageId");
-
-                    b.HasIndex("UserPageId1");
 
                     b.ToTable("Assessments");
                 });
@@ -383,10 +377,6 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Assessment", b =>
                 {
-                    b.HasOne("Fortes.Assess.Domain.AdminPage", "AdminPage")
-                        .WithMany()
-                        .HasForeignKey("AdminPageId1");
-
                     b.HasOne("Fortes.Assess.Domain.Company")
                         .WithMany("Assessments")
                         .HasForeignKey("CompanyId");
@@ -418,10 +408,6 @@ namespace Fortes.Assess.Data.Migrations
                     b.HasOne("Fortes.Assess.Domain.ProgrammingLanguage")
                         .WithMany("Assessments")
                         .HasForeignKey("ProgrammingLanguageId");
-
-                    b.HasOne("Fortes.Assess.Domain.UserPage", "UserPage")
-                        .WithMany()
-                        .HasForeignKey("UserPageId1");
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.AssessmentQuestion", b =>

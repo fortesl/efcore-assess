@@ -8,8 +8,8 @@ namespace Fortes.Assess.Domain
     {
         public Assessment()
         {
-            Questions = new List<AssessmentQuestion>();
-            Users = new List<AssessmentUser>();
+            AssessmentQuestions = new List<AssessmentQuestion>();
+            AssessmentUsers = new List<AssessmentUser>();
         }
         public string Id { get; set; }
         public string Description { get; set; }
@@ -18,8 +18,8 @@ namespace Fortes.Assess.Domain
         public int PassingGrade { get; set; }
         public int AdminPageId { get; set; }
         public AdminPage AdminPage { get; set; }
-        public UserPage UserPage { get; set; }
         public int UserPageId { get; set; }
+        public UserPage UserPage { get; set; }
         public string FieldId { get; set; }
         public string CompanyId { get; set; }
         public string FrameworkId { get; set; }
@@ -28,7 +28,7 @@ namespace Fortes.Assess.Domain
         public string LevelId { get; set; }
         public string OccupationId { get; set; }
         public string DurationId { get; set; }
-        public List<AssessmentQuestion> Questions { get; set; }
-        public List<AssessmentUser> Users { get; set; }
+        public List<AssessmentQuestion> AssessmentQuestions { get; set; }
+        public List<AssessmentUser> AssessmentUsers { get; set; }
     }
 }

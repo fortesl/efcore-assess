@@ -6,7 +6,7 @@ namespace Fortes.Assess.Domain
     {
         public User()
         {
-            AssessmentUsers = new List<AssessmentUser>();
+            UserAssessments = new List<AssessmentUser>();
             UserRoles = new List<UserRole>();
         }
         public int Id { get; set; }
@@ -16,6 +16,6 @@ namespace Fortes.Assess.Domain
         public string email { get; set; }
         public string CompanyId { get; set; }
         public List<UserRole> UserRoles { get; set; }
-        public List<AssessmentUser> AssessmentUsers { get; set; }
+        public List<AssessmentUser> UserAssessments { get; set; }
     }
 }

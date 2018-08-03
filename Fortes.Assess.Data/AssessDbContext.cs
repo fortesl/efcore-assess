@@ -27,12 +27,13 @@ namespace Fortes.Assess.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<AdminPage> AdminPages { get; set; }
         public DbSet<UserPage> UserPages { get; set; }
+        public DbSet<AssessmentQuestion> AssessmentQuestion { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
                 .UseLoggerFactory(MyLoggerFactory)
-                .UseSqlServer("Server = W10BXPX8N2; Database= Evaluate; Trusted_Connection=True;");
+                .UseSqlServer("Server = (localdb)\\mssqllocaldb; Database= Assessment; Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,6 +44,8 @@ namespace Fortes.Assess.Data
                 .HasKey(s => new {s.UserId, s.RoleId});
             modelBuilder.Entity<AssessmentUser>()
                 .HasKey(s => new {s.AssessmentId, s.UserId});
+            modelBuilder.Entity<QuestionTag>()
+                .HasKey(s => new { s.QuestionId, s.TagId });
 
 
             base.OnModelCreating(modelBuilder);

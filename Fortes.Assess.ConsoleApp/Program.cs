@@ -14,7 +14,10 @@ namespace Fortes.Assess.ConsoleApp
         static void Main(string[] args)
         {
             _context.Database.EnsureCreated();
-            InsertAssessment();
+            //        GetLevels();
+            //InsertOneToMany();
+            // InsertOneToOne();
+            InsertManyToMany();
         }
 
         private static void InsertLevel()
@@ -24,10 +27,10 @@ namespace Fortes.Assess.ConsoleApp
                 Id = "Senior_Level",
                 Name = "Senior_Level"
             };
-                _context.Levels.Add(level);
-                _context.Levels.Remove(level);
-                _context.SaveChanges();
+            _context.Levels.Add(level);
+            _context.SaveChanges();
         }
+
 
         private static void GetLevels()
         {
@@ -35,28 +38,57 @@ namespace Fortes.Assess.ConsoleApp
                 Console.WriteLine(levels);
         }
 
-        private static void InsertAssessment()
+        private static void InsertOneToMany()
+        {
+            var level = new Level()
+            {
+                Id = "Junior_Level",
+                Name = "Junior Level",
+                Questions = new List<Question>()
+                {
+                    new Question()
+                    {
+                        Id = "Level-Question1",
+                        Description = "Question from Level 2",
+                    },
+                   new Question()
+                    {
+                        Id = "Level-Question2",
+                        Description = "Question from Level 2",
+                    }
+                }
+            };
+            _context.Levels.Add(level);
+            _context.SaveChanges();
+        }
+
+        private static void InsertOneToOne()
         {
             var assessment = new Assessment()
             {
                 Id = "CUC-101",
-                Description = "County Jail",
-                Questions = new List<AssessmentQuestion>()
+                Description = "Go directly to jail!",
+                UserPage = new UserPage()
                 {
-                    new AssessmentQuestion()
-                    {
-                        QuestionId = "Question1",
-                        AssessmentId = "CUC-101"
-                    }
+                    Title = "User Page"
                 }
             };
-            var question = new Question()
+            assessment.AdminPage = new AdminPage()
             {
-                Id = "Question1",
-                Description = "First CUC Question"
+                Title = "Admin Page"
             };
-  //          _context.Questions.Add(question);
             _context.Assessments.Add(assessment);
+            _context.SaveChanges();
+        }
+
+        private static void InsertManyToMany()
+        {
+            var aq = new AssessmentQuestion()
+            {
+                AssessmentId = "CUC-101",
+                QuestionId = "Level-Question1"
+            };
+            _context.AssessmentQuestion.Add(aq);
             _context.SaveChanges();
         }
 

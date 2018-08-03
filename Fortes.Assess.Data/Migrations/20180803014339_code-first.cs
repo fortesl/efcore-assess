@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fortes.Assess.Data.Migrations
 {
-    public partial class init : Migration
+    public partial class codefirst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,10 +14,10 @@ namespace Fortes.Assess.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AssessmentId = table.Column<int>(nullable: false),
+                    AssessmentId = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Header = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
                     Footer = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -139,10 +139,10 @@ namespace Fortes.Assess.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AssessmentId = table.Column<int>(nullable: false),
+                    AssessmentId = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Header = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
+                    Body = table.Column<string>(nullable: true),
                     Footer = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -271,12 +271,6 @@ namespace Fortes.Assess.Data.Migrations
                 {
                     table.PrimaryKey("PK_Assessments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Assessments_AdminPages_AdminPageId",
-                        column: x => x.AdminPageId,
-                        principalTable: "AdminPages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Assessments_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
@@ -324,12 +318,6 @@ namespace Fortes.Assess.Data.Migrations
                         principalTable: "ProgrammingLanguages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Assessments_UserPages_UserPageId",
-                        column: x => x.UserPageId,
-                        principalTable: "UserPages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -427,12 +415,6 @@ namespace Fortes.Assess.Data.Migrations
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assessments_AdminPageId",
-                table: "Assessments",
-                column: "AdminPageId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Assessments_CompanyId",
                 table: "Assessments",
                 column: "CompanyId");
@@ -471,12 +453,6 @@ namespace Fortes.Assess.Data.Migrations
                 name: "IX_Assessments_ProgrammingLanguageId",
                 table: "Assessments",
                 column: "ProgrammingLanguageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Assessments_UserPageId",
-                table: "Assessments",
-                column: "UserPageId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AssessmentUser_UserId",
@@ -522,6 +498,9 @@ namespace Fortes.Assess.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AdminPages");
+
+            migrationBuilder.DropTable(
                 name: "AssessmentQuestion");
 
             migrationBuilder.DropTable(
@@ -532,6 +511,9 @@ namespace Fortes.Assess.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tags");
+
+            migrationBuilder.DropTable(
+                name: "UserPages");
 
             migrationBuilder.DropTable(
                 name: "UserRole");
@@ -549,9 +531,6 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "AdminPages");
-
-            migrationBuilder.DropTable(
                 name: "Companies");
 
             migrationBuilder.DropTable(
@@ -565,9 +544,6 @@ namespace Fortes.Assess.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProgrammingLanguages");
-
-            migrationBuilder.DropTable(
-                name: "UserPages");
 
             migrationBuilder.DropTable(
                 name: "Durations");

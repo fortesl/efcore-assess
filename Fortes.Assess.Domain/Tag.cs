@@ -8,5 +8,6 @@ namespace Fortes.Assess.Domain
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public List<QuestionTag> TagQuestions { get; set; }
     }
 }

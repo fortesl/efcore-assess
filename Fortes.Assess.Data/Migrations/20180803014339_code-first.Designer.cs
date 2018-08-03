@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fortes.Assess.Data.Migrations
 {
     [DbContext(typeof(AssessDbContext))]
-    [Migration("20180802201938_change-content-fieldName")]
-    partial class changecontentfieldName
+    [Migration("20180803014339_code-first")]
+    partial class codefirst
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,7 +27,7 @@ namespace Fortes.Assess.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AssessmentId");
+                    b.Property<string>("AssessmentId");
 
                     b.Property<string>("Body");
 
@@ -77,9 +77,6 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdminPageId")
-                        .IsUnique();
-
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("DurationId");
@@ -95,9 +92,6 @@ namespace Fortes.Assess.Data.Migrations
                     b.HasIndex("OccupationId");
 
                     b.HasIndex("ProgrammingLanguageId");
-
-                    b.HasIndex("UserPageId")
-                        .IsUnique();
 
                     b.ToTable("Assessments");
                 });
@@ -348,7 +342,7 @@ namespace Fortes.Assess.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AssessmentId");
+                    b.Property<string>("AssessmentId");
 
                     b.Property<string>("Body");
 
@@ -378,11 +372,6 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Assessment", b =>
                 {
-                    b.HasOne("Fortes.Assess.Domain.AdminPage", "AdminPage")
-                        .WithOne("Assessment")
-                        .HasForeignKey("Fortes.Assess.Domain.Assessment", "AdminPageId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Fortes.Assess.Domain.Company")
                         .WithMany("Assessments")
                         .HasForeignKey("CompanyId");
@@ -414,11 +403,6 @@ namespace Fortes.Assess.Data.Migrations
                     b.HasOne("Fortes.Assess.Domain.ProgrammingLanguage")
                         .WithMany("Assessments")
                         .HasForeignKey("ProgrammingLanguageId");
-
-                    b.HasOne("Fortes.Assess.Domain.UserPage", "UserPage")
-                        .WithOne("Assessment")
-                        .HasForeignKey("Fortes.Assess.Domain.Assessment", "UserPageId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.AssessmentQuestion", b =>
