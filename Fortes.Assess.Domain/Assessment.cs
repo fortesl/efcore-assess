@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Fortes.Assess.Domain
 {
@@ -30,5 +29,6 @@ namespace Fortes.Assess.Domain
         public string DurationId { get; set; }
         public List<AssessmentQuestion> AssessmentQuestions { get; set; }
         public List<AssessmentUser> AssessmentUsers { get; set; }
+        public DateTime LastModified { get; set; }
     }
 }

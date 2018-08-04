@@ -82,7 +82,10 @@ namespace Fortes.Assess.Data
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 //Shadow state properties
-                modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified");
+                if (entityType.FindProperty("LastModified") != null)
+                {
+                    modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified");
+                }
 
                 //ignore
                 modelBuilder.Entity(entityType.Name).Ignore("IsDirty");
@@ -97,7 +100,6 @@ namespace Fortes.Assess.Data
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
                 entry.Property("LastModified").CurrentValue = DateTime.Now;
-//                ((ClientChangeTracker) entry.Entity).IsDirty = false;
             }
             return base.SaveChanges();
         }

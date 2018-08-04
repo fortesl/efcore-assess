@@ -9,9 +9,9 @@ namespace Fortes.Assess.ConsoleApp
 {
     class Program
     {
-        private static readonly string _connectionString = "Server=(localdb)\\mssqllocaldb; Database=Assessment;Trusted_Connection=True;";
+        private const string _connectionString = "Server=(localdb)\\mssqllocaldb; Database=Assessment;Trusted_Connection=True;";
 
-        private static AssessDbContext _context = new AssessDbContext(_connectionString);
+        private static readonly AssessDbContext _context = new AssessDbContext(_connectionString);
 
         static void Main(string[] args)
         {
