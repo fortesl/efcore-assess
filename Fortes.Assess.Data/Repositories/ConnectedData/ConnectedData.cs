@@ -2,11 +2,11 @@
 using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Fortes.Assess.Data.Repositories
+namespace Fortes.Assess.Data.Repositories.ConnectedData
 {
     class ConnectedData
     {
-        private AssessDbContext _context;
+        private readonly AssessDbContext _context;
 
         public ConnectedData(AssessDbContext context)
         {

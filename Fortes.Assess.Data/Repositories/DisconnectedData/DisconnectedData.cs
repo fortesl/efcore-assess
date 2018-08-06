@@ -4,11 +4,11 @@ using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace Fortes.Assess.Data.Repositories
+namespace Fortes.Assess.Data.Repositories.DisconnectedData
 {
-    class DisconnectedData
+    public class DisconnectedData
     {
-        private AssessDbContext _context;
+        private readonly AssessDbContext _context;
 
         public DisconnectedData(AssessDbContext context)
         {
@@ -16,20 +16,20 @@ namespace Fortes.Assess.Data.Repositories
             _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public List<string> GetUserAssessmentIds(int userId)
+        public List<string> GeAssessmentIds()
         {
             var assessments = _context.Assessments.OrderBy(a => a.LastModified)
-//                .Where(a => a.AssessmentUsers.Contains(userId))
                 .Select(s => s.Id)
                 .ToList();
             return assessments;
         }
 
-        public Assessment GetAssessment(string Id)
+        public Assessment GetAssessment(string id)
         {
             var assessment = _context.Assessments
                 .Include(a => a.AdminPage)
-                .FirstOrDefault(a => a.Id == Id);
+                .Include(a => a.UserPage)
+                .FirstOrDefault(a => a.Id == id);
             return assessment;
         }
 
@@ -44,7 +44,7 @@ namespace Fortes.Assess.Data.Repositories
             entry.State = isNew ? EntityState.Added : EntityState.Modified;
         }
 
-        public void deleteAssessment(string id)
+        public void DeleteAssessment(string id)
         {
             var assessment = _context.Assessments.Find(id);
             _context.Entry(assessment).State = EntityState.Deleted;

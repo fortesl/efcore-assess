@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 using Fortes.Assess.Domain;
 using Microsoft.Extensions.Logging;
@@ -21,7 +20,7 @@ namespace Fortes.Assess.Data
 
             }); 
 
-        public AssessDbContext(DbContextOptions<AssessDbContext> options)
+        public AssessDbContext(DbContextOptions options)
             : base(options)
         {
         }
@@ -56,15 +55,13 @@ namespace Fortes.Assess.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (optionsBuilder.IsConfigured) return;
-            if (!string.IsNullOrEmpty(_connectionString))
+            if (!optionsBuilder.IsConfigured && !string.IsNullOrEmpty(_connectionString))
             {
                 optionsBuilder
                     .UseSqlServer(_connectionString)
                     .UseLoggerFactory(MyLoggerFactory);
-
+                base.OnConfiguring(optionsBuilder);
             }
-            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,7 +79,7 @@ namespace Fortes.Assess.Data
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 //Shadow state properties
-                if (entityType.FindProperty("LastModified") != null)
+                if (entityType.FindProperty("LastModified") == null)
                 {
                     modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified");
                 }
@@ -99,7 +96,10 @@ namespace Fortes.Assess.Data
             foreach (var entry in ChangeTracker.Entries()
                 .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
-                entry.Property("LastModified").CurrentValue = DateTime.Now;
+                if (entry.Property("LastModified") != null)
+                {
+                    entry.Property("LastModified").CurrentValue = DateTime.Now;
+                }
             }
             return base.SaveChanges();
         }
