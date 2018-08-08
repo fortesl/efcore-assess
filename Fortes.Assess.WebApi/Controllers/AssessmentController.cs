@@ -6,7 +6,9 @@ using Fortes.Assess.Domain;
 namespace Fortes.Assess.WebApi.Controllers
 {
     [Route("api/[controller]")]
+#if NETCOREAPP2_1
     [ApiController]
+#endif
     public class AssessmentController : ControllerBase
     {
         private readonly DisconnectedData _repo;
@@ -16,14 +18,14 @@ namespace Fortes.Assess.WebApi.Controllers
             _repo = repo;
         }
 
-        [HttpGet]
-        public IEnumerable<string> GetAllFromUser()
+        [HttpGet("/user/{id}")]
+        public IEnumerable<KeyValuePair<int, string>> GetAllFromUser(int userId)
         {
-            return _repo.GeAssessmentIds();
+            return _repo.GeAssessmentIds(userId);
         }
 
         [HttpGet("{id}")]
-        public Assessment Get(string id)
+        public Assessment Get(int id)
         {
             return _repo.GetAssessment(id);
         }
@@ -41,7 +43,7 @@ namespace Fortes.Assess.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void DeleteAssessment(string id)
+        public void DeleteAssessment(int id)
         {
             _repo.DeleteAssessment(id);
         }

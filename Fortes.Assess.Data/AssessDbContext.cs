@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Fortes.Assess.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
@@ -68,7 +68,7 @@ namespace Fortes.Assess.Data
         {
             //many-to-many keys
             modelBuilder.Entity<AssessmentQuestion>()
-                .HasKey(s => new {s.AssessmentId, s.QuestionId});
+                .HasKey(s => new { s.AssessmentId, s.QuestionId });
             modelBuilder.Entity<UserRole>()
                 .HasKey(s => new {s.UserId, s.RoleId});
             modelBuilder.Entity<AssessmentUser>()

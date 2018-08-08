@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortes.Assess.WebApi", "For
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D52488F6-3FA1-47AD-8545-7F032BC3BA2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fortes.Assess.UnitTests", "Fortes.Assess.UnitTests\Fortes.Assess.UnitTests.csproj", "{E4AB5364-C8F6-4EEE-A0B9-1887ADA3EF69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fortes.Assess.UnitTests", "Fortes.Assess.UnitTests\Fortes.Assess.UnitTests.csproj", "{E4AB5364-C8F6-4EEE-A0B9-1887ADA3EF69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

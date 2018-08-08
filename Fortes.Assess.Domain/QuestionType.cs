@@ -8,7 +8,7 @@ namespace Fortes.Assess.Domain
 {
     public class QuestionType
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<Question> Questions { get; set; }
     }

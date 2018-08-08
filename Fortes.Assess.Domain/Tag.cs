@@ -6,7 +6,7 @@ namespace Fortes.Assess.Domain
 {
     public class Tag
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<QuestionTag> TagQuestions { get; set; }
     }

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>Fortes.Assess.Data</RootNamespace>
+    <AssemblyName>Fortes.Assess.Data</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20180807231427_init.cs" />
+    <Compile Remove="Migrations\20180808015838_assess-domain3.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Fortes.Assess.Data\AssessDbContext.cs" Link="AssessDbContext.cs" />
+    <Compile Include="..\Fortes.Assess.Data\Repositories\DisconnectedData\DisconnectedData.cs" Link="Repositories\DisconnectedData\DisconnectedData.cs" />
+    <Compile Include="..\Fortes.Assess.Data\Repositories\ConnectedData\ConnectedData.cs" Link="Repositories\ConnectedData\ConnectedData.cs" />
+    <Compile Include="..\Fortes.Assess.Data\Repositories\DisconnectedData\Repository.cs" Link="Repositories\DisconnectedData\Repository.cs" />
+    <Compile Include="..\Fortes.Assess.Data\Repositories\IRepository.cs" Link="Repositories\IRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fortes.Assess.Domain2_0\Fortes.Assess.Domain2_0.csproj" />
+  </ItemGroup>
+
+</Project>

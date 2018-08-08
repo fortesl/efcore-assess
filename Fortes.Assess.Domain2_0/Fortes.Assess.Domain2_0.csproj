@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Fortes.Assess.Domain</AssemblyName>
+    <RootNamespace>Fortes.Assess.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Fortes.Assess.Domain\Assessment.cs" Link="Assessment.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\AdminPage.cs" Link="AdminPage.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\AssessmentQuestion.cs" Link="AssessmentQuestion.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\AssessmentUser.cs" Link="AssessmentUser.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Company.cs" Link="Company.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Duration.cs" Link="Duration.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Field.cs" Link="Field.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Framework.cs" Link="Framework.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Industry.cs" Link="Industry.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Level.cs" Link="Level.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Occupation.cs" Link="Occupation.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\ProgrammingLanguage.cs" Link="ProgrammingLanguage.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Question.cs" Link="Question.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\QuestionTag.cs" Link="QuestionTag.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\QuestionType.cs" Link="QuestionType.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Role.cs" Link="Role.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\Tag.cs" Link="Tag.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\User.cs" Link="User.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\UserPage.cs" Link="UserPage.cs" />
+    <Compile Include="..\Fortes.Assess.Domain\UserRole.cs" Link="userRole.cs" />
+
+  </ItemGroup>
+
+</Project>

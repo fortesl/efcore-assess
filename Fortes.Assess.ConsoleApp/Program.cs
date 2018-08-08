@@ -27,8 +27,7 @@ namespace Fortes.Assess.ConsoleApp
         {
             var level = new Level()
             {
-                Id = "Senior_Level",
-                Name = "Senior_Level"
+                Name = "Senior Level"
             };
             _context.Levels.Add(level);
             _context.SaveChanges();
@@ -45,18 +44,15 @@ namespace Fortes.Assess.ConsoleApp
         {
             var level = new Level()
             {
-                Id = "Junior_Level",
                 Name = "Junior Level",
                 Questions = new List<Question>()
                 {
                     new Question()
                     {
-                        Id = "Level-Question1",
                         Description = "Question from Level 2",
                     },
                    new Question()
                     {
-                        Id = "Level-Question2",
                         Description = "Question from Level 2",
                     }
                 }
@@ -69,7 +65,7 @@ namespace Fortes.Assess.ConsoleApp
         {
             var assessment = new Assessment()
             {
-                Id = "CUC-101",
+                Name = "CUC-101",
                 Description = "Go directly to jail!",
                 UserPage = new UserPage()
                 {
@@ -99,8 +95,8 @@ namespace Fortes.Assess.ConsoleApp
         {
             var aq = new AssessmentQuestion()
             {
-                AssessmentId = "CUC-101",
-                QuestionId = "Level-Question1"
+                AssessmentId = 1,
+                QuestionId = 1
             };
             _context.AssessmentQuestion.Add(aq);
             _context.SaveChanges();

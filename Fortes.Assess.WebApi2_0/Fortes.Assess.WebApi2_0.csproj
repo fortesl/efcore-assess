@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fortes.Assess.Data2_0\Fortes.Assess.Data2_0.csproj" />
+    <ProjectReference Include="..\Fortes.Assess.Domain2_0\Fortes.Assess.Domain2_0.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Fortes.Assess.WebApi\Controllers\AssessmentController.cs" Link="Controllers\AssessmentController.cs" />
+    <Compile Include="..\Fortes.Assess.WebApi\Controllers\UserController.cs" Link="Controllers\UserController.cs" />
+  </ItemGroup>
+
+  </Project>

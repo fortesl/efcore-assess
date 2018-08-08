@@ -6,7 +6,7 @@ namespace Fortes.Assess.Domain
 {
     public class Field
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<Assessment> Assessments { get; set; }
     }
