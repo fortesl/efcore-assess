@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fortes.Assess.Data.Migrations
 {
-    public partial class codefirst : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,8 @@ namespace Fortes.Assess.Data.Migrations
                     Title = table.Column<string>(nullable: true),
                     Header = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
-                    Footer = table.Column<string>(nullable: true)
+                    Footer = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,8 +30,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Durations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,8 +44,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Fields",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,8 +58,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Frameworks",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,8 +72,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Industries",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,8 +86,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Levels",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,8 +100,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Occupations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,8 +114,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "ProgrammingLanguages",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,8 +128,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "QuestionTypes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -125,12 +142,28 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -143,7 +176,8 @@ namespace Fortes.Assess.Data.Migrations
                     Title = table.Column<string>(nullable: true),
                     Header = table.Column<string>(nullable: true),
                     Body = table.Column<string>(nullable: true),
-                    Footer = table.Column<string>(nullable: true)
+                    Footer = table.Column<string>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -159,8 +193,9 @@ namespace Fortes.Assess.Data.Migrations
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
-                    email = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true)
+                    Email = table.Column<string>(nullable: true),
+                    CompanyId = table.Column<int>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -171,10 +206,11 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Companies",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    Industry = table.Column<string>(nullable: true),
-                    IndustryId = table.Column<string>(nullable: true)
+                    IndustryId = table.Column<int>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,14 +227,15 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Questions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedBy = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Explanation = table.Column<string>(nullable: true),
-                    DurationId = table.Column<string>(nullable: true),
-                    LevelId = table.Column<string>(nullable: true),
-                    TypeId = table.Column<string>(nullable: true),
-                    QuestionTypeId = table.Column<string>(nullable: true)
+                    DurationId = table.Column<int>(nullable: false),
+                    LevelId = table.Column<int>(nullable: false),
+                    QuestionTypeId = table.Column<int>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -208,19 +245,19 @@ namespace Fortes.Assess.Data.Migrations
                         column: x => x.DurationId,
                         principalTable: "Durations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Questions_Levels_LevelId",
                         column: x => x.LevelId,
                         principalTable: "Levels",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Questions_QuestionTypes_QuestionTypeId",
                         column: x => x.QuestionTypeId,
                         principalTable: "QuestionTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -228,7 +265,8 @@ namespace Fortes.Assess.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<int>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -251,25 +289,34 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Assessments",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    PassingGrade = table.Column<int>(nullable: false),
-                    AdminPageId = table.Column<int>(nullable: false),
-                    UserPageId = table.Column<int>(nullable: false),
-                    FieldId = table.Column<string>(nullable: true),
-                    CompanyId = table.Column<string>(nullable: true),
-                    FrameworkId = table.Column<string>(nullable: true),
-                    IndustryId = table.Column<string>(nullable: true),
-                    ProgrammingLanguageId = table.Column<string>(nullable: true),
-                    LevelId = table.Column<string>(nullable: true),
-                    OccupationId = table.Column<string>(nullable: true),
-                    DurationId = table.Column<string>(nullable: true)
+                    PassingGrade = table.Column<int>(nullable: true),
+                    AdminPageId = table.Column<int>(nullable: true),
+                    UserPageId = table.Column<int>(nullable: true),
+                    FieldId = table.Column<int>(nullable: true),
+                    CompanyId = table.Column<int>(nullable: true),
+                    FrameworkId = table.Column<int>(nullable: true),
+                    IndustryId = table.Column<int>(nullable: true),
+                    ProgrammingLanguageId = table.Column<int>(nullable: true),
+                    LevelId = table.Column<int>(nullable: true),
+                    OccupationId = table.Column<int>(nullable: true),
+                    DurationId = table.Column<int>(nullable: true),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Assessments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assessments_AdminPages_AdminPageId",
+                        column: x => x.AdminPageId,
+                        principalTable: "AdminPages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Assessments_Companies_CompanyId",
                         column: x => x.CompanyId,
@@ -318,6 +365,12 @@ namespace Fortes.Assess.Data.Migrations
                         principalTable: "ProgrammingLanguages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Assessments_UserPages_UserPageId",
+                        column: x => x.UserPageId,
+                        principalTable: "UserPages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -326,9 +379,10 @@ namespace Fortes.Assess.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    QuestionId = table.Column<string>(nullable: true),
+                    QuestionId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    IsCorrect = table.Column<bool>(nullable: false)
+                    IsCorrect = table.Column<bool>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -338,34 +392,41 @@ namespace Fortes.Assess.Data.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tags",
+                name: "QuestionTag",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    QuestionId = table.Column<string>(nullable: true)
+                    QuestionId = table.Column<int>(nullable: false),
+                    TagId = table.Column<int>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tags", x => x.Id);
+                    table.PrimaryKey("PK_QuestionTag", x => new { x.QuestionId, x.TagId });
                     table.ForeignKey(
-                        name: "FK_Tags_Questions_QuestionId",
+                        name: "FK_QuestionTag_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionTag_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "AssessmentQuestion",
                 columns: table => new
                 {
-                    QuestionId = table.Column<string>(nullable: false),
-                    AssessmentId = table.Column<string>(nullable: false)
+                    QuestionId = table.Column<int>(nullable: false),
+                    AssessmentId = table.Column<int>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -388,9 +449,10 @@ namespace Fortes.Assess.Data.Migrations
                 name: "AssessmentUser",
                 columns: table => new
                 {
-                    AssessmentId = table.Column<string>(nullable: false),
+                    AssessmentId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<string>(nullable: true)
+                    RoleId = table.Column<int>(nullable: false),
+                    LastModified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -413,6 +475,11 @@ namespace Fortes.Assess.Data.Migrations
                 name: "IX_AssessmentQuestion_QuestionId",
                 table: "AssessmentQuestion",
                 column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assessments_AdminPageId",
+                table: "Assessments",
+                column: "AdminPageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Assessments_CompanyId",
@@ -455,6 +522,11 @@ namespace Fortes.Assess.Data.Migrations
                 column: "ProgrammingLanguageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assessments_UserPageId",
+                table: "Assessments",
+                column: "UserPageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AssessmentUser_UserId",
                 table: "AssessmentUser",
                 column: "UserId");
@@ -485,9 +557,9 @@ namespace Fortes.Assess.Data.Migrations
                 column: "QuestionTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_QuestionId",
-                table: "Tags",
-                column: "QuestionId");
+                name: "IX_QuestionTag_TagId",
+                table: "QuestionTag",
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRole_RoleId",
@@ -498,9 +570,6 @@ namespace Fortes.Assess.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AdminPages");
-
-            migrationBuilder.DropTable(
                 name: "AssessmentQuestion");
 
             migrationBuilder.DropTable(
@@ -510,10 +579,7 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Option");
 
             migrationBuilder.DropTable(
-                name: "Tags");
-
-            migrationBuilder.DropTable(
-                name: "UserPages");
+                name: "QuestionTag");
 
             migrationBuilder.DropTable(
                 name: "UserRole");
@@ -525,10 +591,16 @@ namespace Fortes.Assess.Data.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
+                name: "Tags");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "AdminPages");
 
             migrationBuilder.DropTable(
                 name: "Companies");
@@ -544,6 +616,9 @@ namespace Fortes.Assess.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProgrammingLanguages");
+
+            migrationBuilder.DropTable(
+                name: "UserPages");
 
             migrationBuilder.DropTable(
                 name: "Durations");

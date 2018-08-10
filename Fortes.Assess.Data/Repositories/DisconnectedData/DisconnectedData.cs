@@ -16,13 +16,11 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public IEnumerable<KeyValuePair<int, string>> GeAssessmentIds(int userId)
+        public List<Assessment> GeAssessments()
         {
             var assessments = _context.Assessments.OrderBy(a => a.LastModified)
-                .Where(s => s.AssessmentUsers.Any(u => u.UserId == userId))
-                .Select(s => new { s.Id, s.Name })
                 .ToList();
-            return (IEnumerable<KeyValuePair<int, string>>) assessments;
+            return  assessments;
         }
 
         public Assessment GetAssessment(int id)

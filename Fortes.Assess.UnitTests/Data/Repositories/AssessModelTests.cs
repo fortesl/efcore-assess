@@ -28,20 +28,20 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
         }
 
         [TestMethod]
-        public void GeAssessmentIds_Should_Return_All_Assessment_Ids()
+        public void GeAssessments_Should_Return_All_Assessment()
         {
-            var result = _repo.GeAssessmentIds();
+            var result = _repo.GeAssessments();
 
-            Assert.AreEqual(result.Count, 2);
+            Assert.AreEqual(result.ToList().Count, 2);
         }
 
         [TestMethod]
         public void GetAssessment_Should_Return_An_Assessment()
         {
-            var result = _repo.GetAssessment("CUC-101");
+            var result = _repo.GetAssessment(1);
 
-            Assert.AreEqual(result.Id, "CUC-101");
-            Assert.AreEqual(result.UserPage.Title, "Best of the West");
+            Assert.AreEqual(result.Id, 1);
+            Assert.IsNotNull(result.UserPage);
         }
 
         [TestMethod]
@@ -51,11 +51,11 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
         }
 
         [TestMethod]
-        public void GeAssessmentIds_Should_ReturnListOfStrings()
+        public void GeAssessments_Should_Return_A_List_Of_Assessments()
         {
-            var result = _repo.GeAssessmentIds();
+            var result = _repo.GeAssessments();
 
-            Assert.IsInstanceOfType(result, typeof(List<string>));
+            Assert.IsInstanceOfType(result, typeof(List<Assessment>));
         }
 
         private void SeedInMemoryStore()
@@ -67,16 +67,27 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
                     context.Assessments.AddRange(
                         new Assessment()
                         {
-                            Id = "CUC-101",
+                            Name = "CUC-101",
                             Description = "Jail Birds",
                             UserPage = new UserPage()
                             {
                                 Title = "Best of the West"
+                            },
+                            AssessmentUsers = new List<AssessmentUser>()
+                            {
+                                new AssessmentUser()
+                                {
+                                    User = new User()
+                                    {
+                                        Email = "L_Fortes@Dell.com",
+                                        Name = "Luis Fortes"
+                                    }
+                                }
                             }
                         },
                         new Assessment()
                         {
-                            Id = "DELL-101",
+                            Name = "DELL-101",
                             Description = "Computers etc",
                             UserPage = new UserPage()
                             {

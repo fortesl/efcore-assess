@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Fortes.Assess.Data.Repositories.DisconnectedData 
 {
@@ -18,21 +19,25 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public IEnumerable<TEntity> All()
+        public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, Object>>[] includeProperties)
         {
-            return _dbSet.ToList();
+            return GetAllIncluding(includeProperties).ToList();
         }
 
-        public IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> GetAllBy(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IEnumerable<TEntity> results = _dbSet
-                .Where(predicate).ToList();
-            return results;
+            var query = GetAllIncluding(includeProperties);
+            return query.Where(predicate).ToList();
         }
 
-        public TEntity FindByKey(int id)
+        public TEntity GetByKey(int id)
         {
-            return _dbSet.Find();
+            return _dbSet.Find(id);
+        }
+
+        public async Task<TEntity> GetByKeyAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
         }
 
         public void Insert(TEntity entity)
@@ -41,28 +46,79 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             _context.SaveChanges();
         }
 
-        public void Update(TEntity entity)
+        public async void InsertAsync(TEntity entity)
+        {
+            _dbSet.Add(entity);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public TEntity Update(int id, TEntity entity)
         {
             _dbSet.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (GetByKey(id) != null)
+                {
+                    throw;
+                }
+
+                return null;
+            }
+
+            return entity;
         }
 
-        public void Delete(int id)
+        public async Task<TEntity> UpdateAsync(int id, TEntity entity)
         {
-            var entity = FindByKey(id);
+            _dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+            try
+            {
+                await _context.SaveChangesAsync();
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (await GetByKeyAsync(id) != null)
+                {
+                    throw;
+                }
+
+                return null;
+            }
+
+            return entity;
+        }
+
+        public TEntity Delete(int id)
+        {
+            var entity = GetByKey(id);
+            if (entity == null)
+            {
+                return null;
+            }
             _dbSet.Remove(entity);
+            _context.SaveChanges();
+            return entity;
         }
 
-        public IEnumerable<TEntity> AllInclude(params Expression<Func<TEntity, Object>>[] includeProperties)
+        public async Task<TEntity> DeleteAsync(int id)
         {
-            return GetAllIncluding(includeProperties).ToList();
-        }
-
-        public IEnumerable<TEntity> FindByInclude(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            var query = GetAllIncluding(includeProperties);
-            return query.Where(predicate).ToList();
+            var entity = await GetByKeyAsync(id);
+            if (entity == null)
+            {
+                return null;
+            }
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
         private IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)

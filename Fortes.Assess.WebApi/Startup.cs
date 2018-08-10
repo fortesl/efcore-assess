@@ -1,5 +1,6 @@
 ﻿using Fortes.Assess.Data;
 using Fortes.Assess.Data.Repositories.DisconnectedData;
+using Fortes.Assess.Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +24,10 @@ namespace Fortes.Assess.WebApi
         {
             services.AddDbContext<AssessDbContext>(options => options
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-                .UseSqlServer(Configuration.GetConnectionString("FortesAccessConnection")));
-            services.AddScoped<DisconnectedData>();
+                .UseSqlServer(Configuration.GetConnectionString("FortesAccessConnectionSeeded")));
+
+            services.AddScoped<Repository<User>>();
+            services.AddScoped<Repository<Role>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

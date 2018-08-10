@@ -18,10 +18,10 @@ namespace Fortes.Assess.WebApi.Controllers
             _repo = repo;
         }
 
-        [HttpGet("/user/{id}")]
-        public IEnumerable<KeyValuePair<int, string>> GetAllFromUser(int userId)
+        [HttpGet]
+        public List<Assessment> GetAssessments()
         {
-            return _repo.GeAssessmentIds(userId);
+            return _repo.GeAssessments();
         }
 
         [HttpGet("{id}")]

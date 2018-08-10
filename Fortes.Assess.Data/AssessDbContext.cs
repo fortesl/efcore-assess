@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
@@ -50,7 +52,6 @@ namespace Fortes.Assess.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<AdminPage> AdminPages { get; set; }
         public DbSet<UserPage> UserPages { get; set; }
-        public DbSet<AssessmentQuestion> AssessmentQuestion { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -62,6 +63,7 @@ namespace Fortes.Assess.Data
                     .UseLoggerFactory(MyLoggerFactory);
                 base.OnConfiguring(optionsBuilder);
             }
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,12 +83,14 @@ namespace Fortes.Assess.Data
                 //Shadow state properties
                 if (entityType.FindProperty("LastModified") == null)
                 {
-                    modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified");
+                    modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified").HasDefaultValue(DateTime.Now);
                 }
 
                 //ignore
                 modelBuilder.Entity(entityType.Name).Ignore("IsDirty");
             }
+
+            InitializeDataBase.Seed(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }
@@ -102,6 +106,19 @@ namespace Fortes.Assess.Data
                 }
             }
             return base.SaveChanges();
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            {
+                if (entry.Property("LastModified") != null)
+                {
+                    entry.Property("LastModified").CurrentValue = DateTime.Now;
+                }
+            }
+            return await base.SaveChangesAsync();
         }
 
     }

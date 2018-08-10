@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fortes.Assess.Data.Migrations
 {
     [DbContext(typeof(AssessDbContext))]
-    [Migration("20180803031232_fix-relationship3")]
-    partial class fixrelationship3
+    [Migration("20180809172049_last-modified-value-not-required")]
+    partial class lastmodifiedvaluenotrequired
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,10 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<string>("Header");
 
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 946, DateTimeKind.Local));
+
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
@@ -44,44 +48,45 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Assessment", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AdminPageId");
+                    b.Property<int?>("AdminPageId");
 
-                    b.Property<int?>("AdminPageId1");
-
-                    b.Property<string>("CompanyId");
+                    b.Property<int?>("CompanyId");
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("DurationId");
+                    b.Property<int?>("DurationId");
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<string>("FieldId");
+                    b.Property<int?>("FieldId");
 
-                    b.Property<string>("FrameworkId");
+                    b.Property<int?>("FrameworkId");
 
-                    b.Property<string>("IndustryId");
+                    b.Property<int?>("IndustryId");
 
-                    b.Property<string>("LevelId");
+                    b.Property<DateTime>("LastModified");
 
-                    b.Property<string>("OccupationId");
+                    b.Property<int?>("LevelId");
 
-                    b.Property<int>("PassingGrade");
+                    b.Property<string>("Name");
 
-                    b.Property<string>("ProgrammingLanguageId");
+                    b.Property<int?>("OccupationId");
+
+                    b.Property<int?>("PassingGrade");
+
+                    b.Property<int?>("ProgrammingLanguageId");
 
                     b.Property<DateTime>("StartDate");
 
-                    b.Property<int>("UserPageId");
-
-                    b.Property<int?>("UserPageId1");
+                    b.Property<int?>("UserPageId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AdminPageId1");
+                    b.HasIndex("AdminPageId");
 
                     b.HasIndex("CompanyId");
 
@@ -99,16 +104,20 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.HasIndex("ProgrammingLanguageId");
 
-                    b.HasIndex("UserPageId1");
+                    b.HasIndex("UserPageId");
 
                     b.ToTable("Assessments");
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.AssessmentQuestion", b =>
                 {
-                    b.Property<string>("AssessmentId");
+                    b.Property<int>("AssessmentId");
 
-                    b.Property<string>("QuestionId");
+                    b.Property<int>("QuestionId");
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.HasKey("AssessmentId", "QuestionId");
 
@@ -119,11 +128,15 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.AssessmentUser", b =>
                 {
-                    b.Property<string>("AssessmentId");
+                    b.Property<int>("AssessmentId");
 
                     b.Property<int>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
+
+                    b.Property<int>("RoleId");
 
                     b.HasKey("AssessmentId", "UserId");
 
@@ -134,10 +147,15 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Company", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("IndustryId");
+                    b.Property<int?>("IndustryId");
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -150,8 +168,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Duration", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -162,8 +185,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Field", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -174,8 +202,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Framework", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -186,8 +219,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Industry", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -198,8 +236,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Level", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -210,8 +253,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Occupation", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -230,7 +278,11 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<bool>("IsCorrect");
 
-                    b.Property<string>("QuestionId");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 952, DateTimeKind.Local));
+
+                    b.Property<int>("QuestionId");
 
                     b.HasKey("Id");
 
@@ -241,8 +293,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.ProgrammingLanguage", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -253,20 +310,25 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Question", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy");
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("DurationId");
+                    b.Property<int>("DurationId");
 
                     b.Property<string>("Explanation");
 
-                    b.Property<string>("LevelId");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
-                    b.Property<string>("QuestionTypeId");
+                    b.Property<int>("LevelId");
+
+                    b.Property<int>("QuestionTypeId");
 
                     b.HasKey("Id");
 
@@ -281,9 +343,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.QuestionTag", b =>
                 {
-                    b.Property<string>("QuestionId");
+                    b.Property<int>("QuestionId");
 
-                    b.Property<string>("TagId");
+                    b.Property<int>("TagId");
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
                     b.HasKey("QuestionId", "TagId");
 
@@ -294,8 +360,13 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.QuestionType", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -306,20 +377,36 @@ namespace Fortes.Assess.Data.Migrations
 
             modelBuilder.Entity("Fortes.Assess.Domain.Role", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new { Id = 1, LastModified = new DateTime(2018, 8, 9, 12, 20, 48, 954, DateTimeKind.Local), Name = "User" },
+                        new { Id = 2, LastModified = new DateTime(2018, 8, 9, 12, 20, 48, 954, DateTimeKind.Local), Name = "Admin" },
+                        new { Id = 3, LastModified = new DateTime(2018, 8, 9, 12, 20, 48, 954, DateTimeKind.Local), Name = "AssessmentAdmin" }
+                    );
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.Tag", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -334,19 +421,27 @@ namespace Fortes.Assess.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CompanyId");
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<string>("Email");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
                     b.Property<string>("LastName");
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("email");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new { Id = 1, Email = "lmlf100@gmail.com", LastModified = new DateTime(2018, 8, 9, 12, 20, 48, 954, DateTimeKind.Local), LastName = "Fortes", Name = "Luis Fortes" }
+                    );
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.UserPage", b =>
@@ -363,6 +458,10 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<string>("Header");
 
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
+
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
@@ -374,20 +473,28 @@ namespace Fortes.Assess.Data.Migrations
                 {
                     b.Property<int>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<int>("RoleId");
+
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 12, 20, 48, 953, DateTimeKind.Local));
 
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRole");
+
+                    b.HasData(
+                        new { UserId = 1, RoleId = 2, LastModified = new DateTime(2018, 8, 9, 12, 20, 48, 954, DateTimeKind.Local) }
+                    );
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.Assessment", b =>
                 {
                     b.HasOne("Fortes.Assess.Domain.AdminPage", "AdminPage")
                         .WithMany()
-                        .HasForeignKey("AdminPageId1");
+                        .HasForeignKey("AdminPageId");
 
                     b.HasOne("Fortes.Assess.Domain.Company")
                         .WithMany("Assessments")
@@ -423,7 +530,7 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.HasOne("Fortes.Assess.Domain.UserPage", "UserPage")
                         .WithMany()
-                        .HasForeignKey("UserPageId1");
+                        .HasForeignKey("UserPageId");
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.AssessmentQuestion", b =>
@@ -463,22 +570,26 @@ namespace Fortes.Assess.Data.Migrations
                 {
                     b.HasOne("Fortes.Assess.Domain.Question")
                         .WithMany("Options")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.Question", b =>
                 {
                     b.HasOne("Fortes.Assess.Domain.Duration")
                         .WithMany("Questions")
-                        .HasForeignKey("DurationId");
+                        .HasForeignKey("DurationId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Fortes.Assess.Domain.Level")
                         .WithMany("Questions")
-                        .HasForeignKey("LevelId");
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Fortes.Assess.Domain.QuestionType")
                         .WithMany("Questions")
-                        .HasForeignKey("QuestionTypeId");
+                        .HasForeignKey("QuestionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Fortes.Assess.Domain.QuestionTag", b =>
