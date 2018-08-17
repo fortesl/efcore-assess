@@ -23,8 +23,8 @@ namespace Fortes.Assess.WebApi2_0
         {
             services.AddDbContext<AssessDbContext>(options => options
                 .UseSqlServer(Configuration.GetConnectionString("FortesAccessConnection")));
-            services.AddScoped<DisconnectedData>();
             services.AddScoped<Repository<User>>();
+            services.AddScoped<Repository<UserRole>>();
 
             services.AddMvc();
         }

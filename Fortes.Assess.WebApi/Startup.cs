@@ -27,7 +27,6 @@ namespace Fortes.Assess.WebApi
                 .UseSqlServer(Configuration.GetConnectionString("FortesAccessConnectionSeeded")));
 
             services.AddScoped<Repository<User>>();
-            services.AddScoped<Repository<Role>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

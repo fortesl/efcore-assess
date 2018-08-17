@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
   </ItemGroup>
 
@@ -24,7 +25,8 @@
 
   <ItemGroup>
     <Compile Include="..\Fortes.Assess.WebApi\Controllers\AssessmentController.cs" Link="Controllers\AssessmentController.cs" />
-    <Compile Include="..\Fortes.Assess.WebApi\Controllers\UserController.cs" Link="Controllers\UserController.cs" />
+    <Compile Include="..\Fortes.Assess.WebApi\Controllers\AssessmentsController.cs" Link="Controllers\AssessmentsController.cs" />
+    <Compile Include="..\Fortes.Assess.WebApi\Controllers\UsersController.cs" Link="Controllers\UsersController.cs" />
   </ItemGroup>
 
   </Project>

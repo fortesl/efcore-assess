@@ -89,9 +89,9 @@ namespace Fortes.Assess.Data
                 //ignore
                 modelBuilder.Entity(entityType.Name).Ignore("IsDirty");
             }
-
+#if !NETCOREAPP2_0
             InitializeDataBase.Seed(modelBuilder);
-
+#endif
             base.OnModelCreating(modelBuilder);
         }
 

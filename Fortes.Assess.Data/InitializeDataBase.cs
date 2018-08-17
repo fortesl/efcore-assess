@@ -6,7 +6,7 @@ namespace Fortes.Assess.Data
 {
     public static class InitializeDataBase
     {
-
+#if !NETCOREAPP2_0
         public static void Seed(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(
@@ -23,6 +23,6 @@ namespace Fortes.Assess.Data
                 new  { UserId = 1, RoleId = 2, LastModified = DateTime.Now }
             );
         }
-
+#endif
     }
 }

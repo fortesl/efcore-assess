@@ -33,7 +33,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<string>("Header");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 732, DateTimeKind.Local));
 
                     b.Property<string>("Title");
 
@@ -110,7 +112,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("QuestionId");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 738, DateTimeKind.Local));
 
                     b.HasKey("AssessmentId", "QuestionId");
 
@@ -125,7 +129,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("UserId");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 738, DateTimeKind.Local));
 
                     b.Property<int>("RoleId");
 
@@ -143,7 +149,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int?>("IndustryId");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 738, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -159,7 +167,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -173,7 +183,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -187,7 +199,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -201,7 +215,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -215,7 +231,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -229,7 +247,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -247,7 +267,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<bool>("IsCorrect");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<int>("QuestionId");
 
@@ -263,7 +285,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -285,7 +309,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<string>("Explanation");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<int>("LevelId");
 
@@ -308,7 +334,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("TagId");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.HasKey("QuestionId", "TagId");
 
@@ -322,7 +350,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -336,7 +366,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -350,7 +382,9 @@ namespace Fortes.Assess.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Name");
 
@@ -370,7 +404,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("LastName");
 
@@ -394,7 +430,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<string>("Header");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.Property<string>("Title");
 
@@ -409,7 +447,9 @@ namespace Fortes.Assess.Data.Migrations
 
                     b.Property<int>("RoleId");
 
-                    b.Property<DateTime>("LastModified");
+                    b.Property<DateTime>("LastModified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 8, 9, 19, 48, 24, 739, DateTimeKind.Local));
 
                     b.HasKey("UserId", "RoleId");
 

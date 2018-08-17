@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20180807231427_init.cs" />
-    <Compile Remove="Migrations\20180808015838_assess-domain3.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Include="..\Fortes.Assess.Data\InitializeDataBase.cs" Link="InitializeDataBase.cs" />
     <Compile Include="..\Fortes.Assess.Data\AssessDbContext.cs" Link="AssessDbContext.cs" />
     <Compile Include="..\Fortes.Assess.Data\Repositories\DisconnectedData\DisconnectedData.cs" Link="Repositories\DisconnectedData\DisconnectedData.cs" />
     <Compile Include="..\Fortes.Assess.Data\Repositories\ConnectedData\ConnectedData.cs" Link="Repositories\ConnectedData\ConnectedData.cs" />
@@ -20,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />

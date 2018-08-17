@@ -9,7 +9,9 @@ using Fortes.Assess.Domain;
 namespace Fortes.Assess.WebApi.Controllers
 {
     [Route("api/[controller]")]
+#if !NETCOREAPP2_0
     [ApiController]
+#endif
     public class AssessmentsController : ControllerBase
     {
         private readonly AssessDbContext _context;
