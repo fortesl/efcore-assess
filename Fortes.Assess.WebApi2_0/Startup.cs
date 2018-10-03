@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Fortes.Assess.Data.Repositories.DisconnectedData;
 using Fortes.Assess.Domain;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Fortes.Assess.WebApi2_0
 {
@@ -26,6 +27,12 @@ namespace Fortes.Assess.WebApi2_0
             services.AddScoped<Repository<User>>();
             services.AddScoped<Repository<UserRole>>();
 
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
+
             services.AddMvc();
         }
 
@@ -37,6 +44,15 @@ namespace Fortes.Assess.WebApi2_0
                 app.UseDeveloperExceptionPage();
             }
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
             app.UseMvc();
         }
     }

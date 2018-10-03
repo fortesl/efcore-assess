@@ -5,26 +5,32 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Fortes.Assess.Data.Repositories;
+using Fortes.Assess.Domain;
+using Fortes.Assess.Data.Repositories.DisconnectedData;
+using Microsoft.Extensions.Logging;
 
 namespace Fortes.Assess.WebApi.Controllers
 {
     [Route("api/[controller]")]
-#if NETCOREAPP2_1
     [ApiController]
-#endif
     public class UsersController : ControllerBase
     {
         private readonly IRepository<User> _repo;
+        private readonly ILogger _logger;
 
-        public UsersController(IRepository<User> repo)
+        public UsersController(Repository<User> repo, ILogger<UsersController> logger)
         {
             _repo = repo;
+            _logger = logger;
         }
 
         // GET: api/users
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
+            _logger.LogWarning("Getting users");
             return _repo.GetAll();
         }
 
@@ -39,6 +45,7 @@ namespace Fortes.Assess.WebApi.Controllers
             {
                 return NotFound();
             }
+            _logger.LogWarning($"Got user {id}: ", user);
             return Ok(user);
         }
 
@@ -52,7 +59,7 @@ namespace Fortes.Assess.WebApi.Controllers
             }
             _repo.Insert(user);
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction("AddUser", new { id = user.Id }, user);
         }
 
         // PUT: api/users/1
