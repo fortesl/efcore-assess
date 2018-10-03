@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Luis M Fortes</Authors>
+    <Company>Fortes Systems</Company>
+    <Product>Assess</Product>
+    <Description>backend</Description>
+    <PackageProjectUrl>https://github.com/fortesl</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

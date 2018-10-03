@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Fortes.Assess.Data.Repositories;
+using Fortes.Assess.Data.Repositories.DisconnectedData;
+using Fortes.Assess.Domain;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Fortes.Assess.Data.Repositories;
-using Fortes.Assess.Domain;
-using Fortes.Assess.Data.Repositories.DisconnectedData;
 
 namespace Fortes.Assess.WebApi.Controllers
 {
@@ -16,7 +16,7 @@ namespace Fortes.Assess.WebApi.Controllers
     {
         private readonly IRepository<User> _repo;
 
-        public UsersController(Repository<User> repo)
+        public UsersController(IRepository<User> repo)
         {
             _repo = repo;
         }
@@ -28,11 +28,11 @@ namespace Fortes.Assess.WebApi.Controllers
             return _repo.GetAll();
         }
 
-        // GET: api/Users/1
+        // GET: api/Users/get/1
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
         {
-            var users = (List<User>) _repo.GetAllBy(u => u.Id ==id, u => u.UserRoles);
+            var users = (List<User>) _repo.GetAllBy(u => u.Id ==id);
             User user = users.FirstOrDefault();
 
             if (user == null)
@@ -93,6 +93,13 @@ namespace Fortes.Assess.WebApi.Controllers
             }
 
             return Ok(deleted);
+        }
+
+        [HttpGet]
+        [Route("isalive")]
+        public IActionResult IsAlive()
+        {
+            return Ok(HttpContext.Request.Path);
         }
 
     }

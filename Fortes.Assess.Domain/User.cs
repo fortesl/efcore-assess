@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Fortes.Assess.Domain
 {
@@ -7,15 +8,16 @@ namespace Fortes.Assess.Domain
         public User()
         {
             UserAssessments = new List<AssessmentUser>();
-            UserRoles = new List<UserRole>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Email { get; set; }
-        public int? CompanyId { get; set; }
-        public List<UserRole> UserRoles { get; set; }
+        public int CompanyId { get; set; }
+        public Role Role { get; set; }
+        public int RoleId { get; set; }
         public List<AssessmentUser> UserAssessments { get; set; }
+        public DateTime LastModified { get; set; }
     }
 }

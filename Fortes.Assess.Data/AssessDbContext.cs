@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Fortes.Assess.Domain;
+﻿using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Fortes.Assess.Data
 {
@@ -60,6 +59,7 @@ namespace Fortes.Assess.Data
             {
                 optionsBuilder
                     .UseSqlServer(_connectionString)
+                    .EnableSensitiveDataLogging()
                     .UseLoggerFactory(MyLoggerFactory);
                 base.OnConfiguring(optionsBuilder);
             }
@@ -71,8 +71,6 @@ namespace Fortes.Assess.Data
             //many-to-many keys
             modelBuilder.Entity<AssessmentQuestion>()
                 .HasKey(s => new { s.AssessmentId, s.QuestionId });
-            modelBuilder.Entity<UserRole>()
-                .HasKey(s => new {s.UserId, s.RoleId});
             modelBuilder.Entity<AssessmentUser>()
                 .HasKey(s => new {s.AssessmentId, s.UserId});
             modelBuilder.Entity<QuestionTag>()
@@ -89,6 +87,8 @@ namespace Fortes.Assess.Data
                 //ignore
                 modelBuilder.Entity(entityType.Name).Ignore("IsDirty");
             }
+
+            InitializeDataBase.ConfigureEntities(modelBuilder);
 #if !NETCOREAPP2_0
             InitializeDataBase.Seed(modelBuilder);
 #endif

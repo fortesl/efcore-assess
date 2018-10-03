@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Fortes.Assess.Domain
 {
@@ -16,9 +14,9 @@ namespace Fortes.Assess.Domain
         public string CreatedBy { get; set; }
         public string Description { get; set; }
         public string Explanation { get; set; }
-        public int DurationId { get; set; }
-        public int LevelId { get; set; }
-        public int QuestionTypeId { get; set; }
+        public Duration Duration { get; set; }
+        public Level Level { get; set; }
+        public QuestionType QuestionType { get; set; }
         public List<Option> Options { get; set; }
         public List<AssessmentQuestion> QuestionAssessments { get; set; }
     }

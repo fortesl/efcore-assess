@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Fortes.Assess.Data;
+﻿using Fortes.Assess.Data;
 using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace Fortes.Assess.ConsoleApp
 {
@@ -45,17 +44,6 @@ namespace Fortes.Assess.ConsoleApp
             var level = new Level()
             {
                 Name = "Junior Level",
-                Questions = new List<Question>()
-                {
-                    new Question()
-                    {
-                        Description = "Question from Level 2",
-                    },
-                   new Question()
-                    {
-                        Description = "Question from Level 2",
-                    }
-                }
             };
             _context.Levels.Add(level);
             _context.SaveChanges();
@@ -98,7 +86,7 @@ namespace Fortes.Assess.ConsoleApp
                 AssessmentId = 1,
                 QuestionId = 1
             };
-            _context.AssessmentQuestion.Add(aq);
+            _context.Add(aq);
             _context.SaveChanges();
         }
 

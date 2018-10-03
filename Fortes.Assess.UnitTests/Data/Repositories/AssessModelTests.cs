@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
 using Fortes.Assess.Data;
 using Fortes.Assess.Data.Repositories.DisconnectedData;
 using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Fortes.Assess.UnitTests.Data.Repositories
 {
@@ -62,41 +62,28 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
         {
             using (var context = new AssessDbContext(_options))
             {
-                if (!context.Assessments.Any())
-                {
-                    context.Assessments.AddRange(
-                        new Assessment()
+                if (context.Assessments.Any()) return;
+                context.Assessments.AddRange(
+                    new Assessment()
+                    {
+                        Name = "CUC-101",
+                        Description = "Jail Birds",
+                        UserPage = new UserPage()
                         {
-                            Name = "CUC-101",
-                            Description = "Jail Birds",
-                            UserPage = new UserPage()
-                            {
-                                Title = "Best of the West"
-                            },
-                            AssessmentUsers = new List<AssessmentUser>()
-                            {
-                                new AssessmentUser()
-                                {
-                                    User = new User()
-                                    {
-                                        Email = "L_Fortes@Dell.com",
-                                        Name = "Luis Fortes"
-                                    }
-                                }
-                            }
+                            Title = "Best of the West"
                         },
-                        new Assessment()
+                    },
+                    new Assessment()
+                    {
+                        Name = "DELL-101",
+                        Description = "Computers etc",
+                        UserPage = new UserPage()
                         {
-                            Name = "DELL-101",
-                            Description = "Computers etc",
-                            UserPage = new UserPage()
-                            {
-                                Title = "One in the West"
-                            }
+                            Title = "One in the West"
                         }
-                    );
-                    context.SaveChanges();
-                }
+                    }
+                );
+                context.SaveChanges();
             }
 
         }
