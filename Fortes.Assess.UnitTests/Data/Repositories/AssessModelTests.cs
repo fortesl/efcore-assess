@@ -1,5 +1,4 @@
 using Fortes.Assess.Data;
-using Fortes.Assess.Data.Repositories.DisconnectedData;
 using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,16 +13,15 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
     {
         private const string IN_MEMORY_STORE = "IN_MEMORY_TESTDB";
         private readonly DbContextOptions _options;
-        private AssessDbContext _context;
-        private readonly DisconnectedData _repo;
+        private readonly Assess.Data.Repositories.DisconnectedData.DisconnectedData _repo;
 
         public AssessModelTests()
         {
             _options = new DbContextOptionsBuilder<AssessDbContext>()
                 .UseInMemoryDatabase(IN_MEMORY_STORE)
                 .Options;
-            _context = new AssessDbContext(_options);
-            _repo = new DisconnectedData(_context);
+            var context = new AssessDbContext(_options);
+            _repo = new Assess.Data.Repositories.DisconnectedData.DisconnectedData(context);
             SeedInMemoryStore();
         }
 

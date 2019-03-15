@@ -20,7 +20,7 @@ namespace Fortes.Assess.Data.Repositories
         Task<TEntity> DeleteAsync(int id);
         void Insert(TEntity entity);
 
-        void InsertAsync(TEntity entity);
+        Task<TEntity> InsertAsync(TEntity entity);
 
         TEntity Update(int id, TEntity entity);
 

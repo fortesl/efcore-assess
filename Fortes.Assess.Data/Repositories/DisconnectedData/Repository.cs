@@ -46,10 +46,12 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             _context.SaveChanges();
         }
 
-        public async void InsertAsync(TEntity entity)
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
             _dbSet.Add(entity);
             await _context.SaveChangesAsync();
+
+            return entity;
         }
 
 
