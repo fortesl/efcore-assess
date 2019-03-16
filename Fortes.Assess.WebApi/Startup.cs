@@ -1,9 +1,7 @@
-﻿using System.Globalization;
-using Fortes.Assess.Data;
+﻿using Fortes.Assess.Data;
 using Fortes.Assess.Data.Repositories;
 using Fortes.Assess.Data.Repositories.DisconnectedData;
 using Fortes.Assess.Domain;
-using Fortes.Assess.WebApi.Culture;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -43,9 +41,11 @@ namespace Fortes.Assess.WebApi
             services.AddDbContext<AssessDbContext>(options => options
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(_configuration.GetValue<string>("ConnectionStrings:FortesAccessConnectionSeeded")));
+                .UseSqlServer(_configuration.GetValue<string>("ConnectionStrings:AzureAssessDb") ?? _configuration.GetValue<string>("ConnectionStrings:FortesAccessConnectionSeeded")));
 
             services.AddScoped<IRepository<User>, Repository<User>>();
+
+            services.AddCors();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -69,6 +69,8 @@ namespace Fortes.Assess.WebApi
                 // Use the HTTP Strict Transport Security Protocol(HSTS) middleware
                 app.UseHsts();
             }
+
+            app.UseCors();
 
             // Use HTTPS Redirection Middleware to redirect HTTP requests to HTTPS.
             app.UseHttpsRedirection();
