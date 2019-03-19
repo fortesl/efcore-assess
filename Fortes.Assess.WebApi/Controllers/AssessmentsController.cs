@@ -20,7 +20,6 @@
 
         private readonly IRepository<Assessment> _repo;
         private readonly ILogger _logger;
-        private readonly IHttpContextAccessor _context;
 
         #endregion
 
@@ -29,10 +28,10 @@
         public AssessmentsController(IRepository<Assessment> repo, ILogger<AssessmentsController> logger, IHttpContextAccessor context)
         {
             _logger = logger ?? throw new ArgumentNullException($"logger is not defined!");
-            _context = context ?? throw new ArgumentNullException($"dbcontext is not defined");
+            var httpcontext = context ?? throw new ArgumentNullException($"dbcontext is not defined");
             _repo = repo ?? throw new ArgumentException($"Assessment repository is not defined!");
 
-            _logger.LogInformation($"Host: {_context.HttpContext.Request.Host} IsAuthenticated: {_context.HttpContext.User.Identity.IsAuthenticated}");
+            _logger.LogInformation($"Host: {httpcontext.HttpContext.Request.Host} IsAuthenticated: {httpcontext.HttpContext.User.Identity.IsAuthenticated}");
         }
 
         /// <summary>
@@ -53,13 +52,19 @@
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> Get(int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid id {id}");
+                return BadRequest();
+            }
             var assessment = await _repo.GetByKeyAsync(id);
             if (assessment == null)
             {
-                _logger.LogWarning($"Get: assessment {id} not found");
+                _logger.LogError($"Get: assessment {id} not found");
                 return NotFound();
             }
             return Ok(assessment);
@@ -77,7 +82,7 @@
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning($"Post: BadRequest: - {ModelState}");
+                _logger.LogError($"Post: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
             await _repo.ModifyAsync(assessment);
@@ -99,7 +104,7 @@
         {
             if (!ModelState.IsValid || id != assessment.Id)
             {
-                _logger.LogWarning($"Put: BadRequest: - {ModelState}");
+                _logger.LogError($"Put: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
 

@@ -20,7 +20,6 @@
 
         private readonly IRepository<UserPage> _repo;
         private readonly ILogger _logger;
-        private readonly IHttpContextAccessor _context;
 
         #endregion
 
@@ -28,11 +27,11 @@
 
         public UsersPageController(IRepository<UserPage> repo, ILogger<UsersPageController> logger, IHttpContextAccessor context)
         {
-            _logger = logger ?? throw new ArgumentNullException("logger is not defined!");
-            _context = context ?? throw new ArgumentNullException("dbcontext is not defined");
-            _repo = repo ?? throw new ArgumentException("repository is not defined!");
+            _logger = logger ?? throw new ArgumentNullException($"logger is not defined!");
+            _repo = repo ?? throw new ArgumentNullException($"repository is not defined!");
 
-            _logger.LogInformation($"Host: {_context.HttpContext.Request.Host} IsAuthenticated: {_context.HttpContext.User.Identity.IsAuthenticated}");
+            var httpcontext = context ?? throw new ArgumentNullException($"httpcontext is not defined");
+            _logger.LogInformation($"Host: {httpcontext.HttpContext.Request.Host} IsAuthenticated: {httpcontext.HttpContext.User.Identity.IsAuthenticated}");
         }
 
         /// <summary>
@@ -53,13 +52,19 @@
         /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> Get(int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid id {id}");
+                return BadRequest();
+            }
             var page = await _repo.GetByKeyAsync(id);
             if (page == null)
             {
-                _logger.LogWarning($"Get: id {id} not found");
+                _logger.LogError($"Get: id {id} not found");
                 return NotFound();
             }
             return Ok(page);
@@ -77,7 +82,7 @@
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning($"Post: BadRequest: - {ModelState}");
+                _logger.LogError($"Post: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
             await _repo.ModifyAsync(page);
@@ -99,7 +104,7 @@
         {
             if (!ModelState.IsValid || id != page.Id)
             {
-                _logger.LogWarning($"Put: BadRequest: - {ModelState}");
+                _logger.LogError($"Put: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
 
