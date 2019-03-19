@@ -20,7 +20,6 @@
 
         private readonly IRepository<User> _repo;
         private readonly ILogger _logger;
-        private readonly IHttpContextAccessor _context;
 
         #endregion
 
@@ -29,10 +28,10 @@
         public UsersController(IRepository<User> repo, ILogger<UsersController> logger, IHttpContextAccessor context)
         {
             _logger = logger ?? throw new ArgumentNullException($"logger is not defined!");
-            _context = context ?? throw new ArgumentNullException($"dbcontext is not defined");
-            _repo = repo ?? throw new ArgumentException($"User repository is not defined!");
+            _repo = repo ?? throw new ArgumentNullException($"User repository is not defined!");
 
-            _logger.LogInformation($"Host: {_context.HttpContext.Request.Host} IsAuthenticated: {_context.HttpContext.User.Identity.IsAuthenticated}");
+            var httpcontext = context ?? throw new ArgumentNullException($"htttpcontext is not defined");
+            _logger.LogInformation($"Host: {httpcontext.HttpContext.Request.Host} IsAuthenticated: {httpcontext.HttpContext.User.Identity.IsAuthenticated}");
         }
 
         /// <summary>
@@ -54,8 +53,14 @@
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> Get(int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid id {id}");
+                return BadRequest();
+            }
             var user = await _repo.GetByKeyAsync(id);
             if (user == null)
             {
@@ -77,7 +82,7 @@
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning($"AddUser: BadRequest: - {ModelState}");
+                _logger.LogError($"AddUser: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
             await _repo.ModifyAsync(user);
@@ -99,7 +104,7 @@
         {
             if (!ModelState.IsValid || id != user.Id)
             {
-                _logger.LogWarning($"ModifyUser: BadRequest: - {ModelState}");
+                _logger.LogError($"ModifyUser: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
 
@@ -126,7 +131,7 @@
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning($"DeleteUser: BadRequest: - {ModelState}");
+                _logger.LogError($"DeleteUser: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
             var deleted = await _repo.DeleteAsync(id);
