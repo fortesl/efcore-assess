@@ -1,49 +1,62 @@
-﻿using System;
-using Fortes.Assess.Data.Repositories;
-using Fortes.Assess.Domain;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-
-namespace Fortes.Assess.WebApi.Controllers
+﻿namespace Fortes.Assess.WebApi.Controllers
 {
-    public class UsersController : AssessBaseController
+    #region usings
+
+    using System;
+    using Fortes.Assess.Data.Repositories;
+    using Fortes.Assess.Domain;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Globalization;
+    using System.Net;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
+
+    #endregion
+
+    public class UsersController : BaseController
     {
+        #region constructor
+
         private readonly IRepository<User> _repo;
         private readonly ILogger _logger;
         private readonly IHttpContextAccessor _context;
 
+        #endregion
+
+        #region Public Methods
+
         public UsersController(IRepository<User> repo, ILogger<UsersController> logger, IHttpContextAccessor context)
         {
-            _repo = repo;
-            _logger = logger;
-            _context = context;
+            _logger = logger ?? throw new ArgumentNullException("logger is not defined!");
+            _context = context ?? throw new ArgumentNullException("dbcontext is not defined");
+            _repo = repo ?? throw new ArgumentException("User repository is not defined!");
+
             _logger.LogInformation($"Host: {_context.HttpContext.Request.Host} IsAuthenticated: {_context.HttpContext.User.Identity.IsAuthenticated}");
         }
 
-        // GET: api/users
+        /// <summary>
+        /// GET: api/users
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(200)]
-        public IActionResult GetUsers()
+        public async Task<IActionResult> Get()
         {
-            var users = _repo.GetAll();
-            return Ok(users);
+            return Ok(await _repo.GetAllAsync());
         }
 
-        // GET: api/Users/get/1
+        /// <summary>
+        /// GET: api/Users/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public IActionResult GetUser(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var users = (List<User>)_repo.GetAllBy(u => u.Id == id);
-            User user = users.FirstOrDefault();
-
+            var user = await _repo.GetByKeyAsync(id);
             if (user == null)
             {
                 _logger.LogWarning($"GetUser: user {id} not found");
@@ -52,11 +65,15 @@ namespace Fortes.Assess.WebApi.Controllers
             return Ok(user);
         }
 
-        // POST: api/users
+        /// <summary>
+        /// POST: api/users
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> AddUserAsync([FromBody] User user)
+        public async Task<IActionResult> Post([FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
@@ -65,15 +82,20 @@ namespace Fortes.Assess.WebApi.Controllers
             }
             await _repo.InsertAsync(user);
 
-            return CreatedAtAction("AddUserAsync", new { id = user.Id }, user);
+            return CreatedAtAction("Post", new { id = user.Id }, user);
         }
 
-        // PUT: api/users/1
+        /// <summary>
+        /// PUT: api/users/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> ModifyUser([FromRoute] int id, [FromBody] User user)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid || id != user.Id)
             {
@@ -90,12 +112,17 @@ namespace Fortes.Assess.WebApi.Controllers
             return NoContent();
         }
 
-        // DELETE: api/users/1
+        
+        /// <summary>
+        /// DELETE: api/users/id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -112,6 +139,10 @@ namespace Fortes.Assess.WebApi.Controllers
             return Ok(deleted);
         }
 
+        /// <summary>
+        /// Is controller alive
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("isAlive")]
         [ProducesResponseType(200)]
@@ -120,6 +151,8 @@ namespace Fortes.Assess.WebApi.Controllers
             string message = $"{DateTime.UtcNow.ToString(CultureInfo.CurrentCulture)} HostName: {Dns.GetHostName()} Path: {HttpContext.Request.Path}";
             return Ok(message);
         }
+
+        #endregion
 
     }
 }

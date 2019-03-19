@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fortes.Assess.Data
 {
-    public class AssessDbContext : DbContext
+    public class AssessDbContext : DbContext, IAssessDbContext
     {
         private static string _connectionString;
 
