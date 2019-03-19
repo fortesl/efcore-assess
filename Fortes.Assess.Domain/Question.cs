@@ -6,7 +6,7 @@ namespace Fortes.Assess.Domain
     {
         public Question()
         {
-            Options = new List<Option>();
+            ChoiceOptions = new List<ChoiceOption>();
             QuestionAssessments = new List<AssessmentQuestion>();
         }
         public int Id { get; set; }
@@ -17,11 +17,11 @@ namespace Fortes.Assess.Domain
         public Duration Duration { get; set; }
         public Level Level { get; set; }
         public QuestionType QuestionType { get; set; }
-        public List<Option> Options { get; set; }
+        public List<ChoiceOption> ChoiceOptions { get; set; }
         public List<AssessmentQuestion> QuestionAssessments { get; set; }
     }
 
-    public class Option
+    public class ChoiceOption
     {
         public int Id { get; set; }
         public int QuestionId { get; set; }

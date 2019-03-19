@@ -3,8 +3,8 @@
     #region usings
 
     using System;
-    using Fortes.Assess.Data.Repositories;
-    using Fortes.Assess.Domain;
+    using Data.Repositories;
+    using Domain;
     using Microsoft.AspNetCore.Mvc;
     using System.Globalization;
     using System.Net;
@@ -80,7 +80,7 @@
                 _logger.LogWarning($"Post: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
-            await _repo.InsertAsync(page);
+            await _repo.ModifyAsync(page);
 
             return CreatedAtAction("Post", new { id = page.Id }, page);
         }
@@ -103,7 +103,7 @@
                 return BadRequest(ModelState);
             }
 
-            var updated = await _repo.UpdateAsync(id, page);
+            var updated = await _repo.ModifyAsync(page);
             if (updated == null)
             {
                 return NotFound();

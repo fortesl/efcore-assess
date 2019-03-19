@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Fortes.Assess.Data.Repositories.DisconnectedData;
 using Fortes.Assess.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,9 +26,9 @@ namespace Fortes.Assess.UnitTests.Data.Repositories.DisconnectedData
         }
 
         [TestMethod]
-        public void Test_GetAll_Should_ReturnAllEntities()
+        public async Task Test_GetAll_Should_ReturnAllEntities()
         {
-            var list = _repo.GetAll();
+            var list = await _repo.GetAllAsync();
 
             Assert.AreEqual(list.Count(), 1);
         }

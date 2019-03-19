@@ -1,6 +1,7 @@
 ﻿using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using Assessment = Fortes.Assess.Domain.Assessment;
 
 namespace Fortes.Assess.Data
@@ -33,7 +34,6 @@ namespace Fortes.Assess.Data
 
         }
 
-#if !NETCOREAPP2_0
         public static void Seed(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Company>().HasData(
@@ -125,10 +125,9 @@ namespace Fortes.Assess.Data
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, FirstName = "Luis", LastName = "Fortes", Email = "lmlf100@gmail.com", Name = "Luis Fortes", RoleId = 4, CompanyId = 1, LastModified = DateTime.Now}
+                new User { Id = 1, FirstName = "Luis", LastName = "Fortes", Email = "lmlf100@gmail.com", Name = "Luis Fortes", CompanyId = 1, LastModified = DateTime.Now}
             );
 
         }
-#endif
     }
 }

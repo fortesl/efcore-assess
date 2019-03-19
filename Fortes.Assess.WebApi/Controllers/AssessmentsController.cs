@@ -3,8 +3,8 @@
     #region usings
 
     using System;
-    using Fortes.Assess.Data.Repositories;
-    using Fortes.Assess.Domain;
+    using Data.Repositories;
+    using Domain;
     using Microsoft.AspNetCore.Mvc;
     using System.Globalization;
     using System.Net;
@@ -28,9 +28,9 @@
 
         public AssessmentsController(IRepository<Assessment> repo, ILogger<AssessmentsController> logger, IHttpContextAccessor context)
         {
-            _logger = logger ?? throw new ArgumentNullException("logger is not defined!");
-            _context = context ?? throw new ArgumentNullException("dbcontext is not defined");
-            _repo = repo ?? throw new ArgumentException("Assessment repository is not defined!");
+            _logger = logger ?? throw new ArgumentNullException($"logger is not defined!");
+            _context = context ?? throw new ArgumentNullException($"dbcontext is not defined");
+            _repo = repo ?? throw new ArgumentException($"Assessment repository is not defined!");
 
             _logger.LogInformation($"Host: {_context.HttpContext.Request.Host} IsAuthenticated: {_context.HttpContext.User.Identity.IsAuthenticated}");
         }
@@ -80,7 +80,7 @@
                 _logger.LogWarning($"Post: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
-            await _repo.InsertAsync(assessment);
+            await _repo.ModifyAsync(assessment);
 
             return CreatedAtAction("Post", new { id = assessment.Id }, assessment);
         }
@@ -103,7 +103,7 @@
                 return BadRequest(ModelState);
             }
 
-            var updated = await _repo.UpdateAsync(id, assessment);
+            var updated = await _repo.ModifyAsync(assessment);
             if (updated == null)
             {
                 return NotFound();
