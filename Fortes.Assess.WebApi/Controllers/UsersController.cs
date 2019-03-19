@@ -82,7 +82,7 @@
             }
             await _repo.InsertAsync(user);
 
-            return CreatedAtAction("AddUserAsync", new { id = user.Id }, user);
+            return CreatedAtAction("Post", new { id = user.Id }, user);
         }
 
         /// <summary>
