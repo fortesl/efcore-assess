@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Fortes.Assess.Domain
+﻿namespace Fortes.Assess.Domain
 {
     public class AssessmentQuestion
     {

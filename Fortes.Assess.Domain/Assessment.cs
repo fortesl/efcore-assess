@@ -8,7 +8,7 @@ namespace Fortes.Assess.Domain
         public Assessment()
         {
             AssessmentQuestions = new List<AssessmentQuestion>();
-            AssessmentUsers = new List<AssessmentUser>();
+            AssessmentUsers = new List<UserAssessment>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -27,7 +27,7 @@ namespace Fortes.Assess.Domain
         public Occupation Occupation { get; set; }
         public Duration Duration { get; set; }
         public List<AssessmentQuestion> AssessmentQuestions { get; set; }
-        public List<AssessmentUser> AssessmentUsers { get; set; }
+        public List<UserAssessment> AssessmentUsers { get; set; }
         public DateTime LastModified { get; set; }
     }
 }

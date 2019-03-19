@@ -71,10 +71,12 @@ namespace Fortes.Assess.Data
             //many-to-many keys
             modelBuilder.Entity<AssessmentQuestion>()
                 .HasKey(s => new { s.AssessmentId, s.QuestionId });
-            modelBuilder.Entity<AssessmentUser>()
+            modelBuilder.Entity<UserAssessment>()
                 .HasKey(s => new {s.AssessmentId, s.UserId});
             modelBuilder.Entity<QuestionTag>()
                 .HasKey(s => new {s.QuestionId, s.TagId});
+            modelBuilder.Entity<UserRole>()
+                .HasKey(s => new { s.RoleId, s.UserId });
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -89,9 +91,7 @@ namespace Fortes.Assess.Data
             }
 
             InitializeDataBase.ConfigureEntities(modelBuilder);
-#if !NETCOREAPP2_0
             InitializeDataBase.Seed(modelBuilder);
-#endif
             base.OnModelCreating(modelBuilder);
         }
 

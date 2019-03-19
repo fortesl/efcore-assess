@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Fortes.Assess.UnitTests.Data.Repositories
 {
@@ -13,7 +14,7 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
     {
         private const string IN_MEMORY_STORE = "IN_MEMORY_TESTDB";
         private readonly DbContextOptions _options;
-        private readonly Assess.Data.Repositories.DisconnectedData.DisconnectedData _repo;
+        private readonly Assess.Data.Repositories.DisconnectedData.Repository<Assessment> _repo;
 
         public AssessModelTests()
         {
@@ -21,22 +22,22 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
                 .UseInMemoryDatabase(IN_MEMORY_STORE)
                 .Options;
             var context = new AssessDbContext(_options);
-            _repo = new Assess.Data.Repositories.DisconnectedData.DisconnectedData(context);
+            _repo = new Assess.Data.Repositories.DisconnectedData.Repository<Assessment>(context);
             SeedInMemoryStore();
         }
 
         [TestMethod]
-        public void GeAssessments_Should_Return_All_Assessment()
+        public async Task GeAssessments_Should_Return_All_Assessment()
         {
-            var result = _repo.GeAssessments();
+            var result = await _repo.GetAllAsync();
 
-            Assert.AreEqual(result.ToList().Count, 2);
+            Assert.AreEqual(result.Count(), 2);
         }
 
         [TestMethod]
-        public void GetAssessment_Should_Return_An_Assessment()
+        public async Task GetAssessment_Should_Return_An_Assessment()
         {
-            var result = _repo.GetAssessment(1);
+            var result = await _repo.GetByKeyAsync(1);
 
             Assert.AreEqual(result.Id, 1);
             Assert.IsNotNull(result.UserPage);
@@ -49,9 +50,9 @@ namespace Fortes.Assess.UnitTests.Data.Repositories
         }
 
         [TestMethod]
-        public void GeAssessments_Should_Return_A_List_Of_Assessments()
+        public async Task GeAssessments_Should_Return_A_List_Of_Assessments()
         {
-            var result = _repo.GeAssessments();
+            var result = await _repo.GetAllAsync();
 
             Assert.IsInstanceOfType(result, typeof(List<Assessment>));
         }

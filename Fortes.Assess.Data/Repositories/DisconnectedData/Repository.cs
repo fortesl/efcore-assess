@@ -36,7 +36,7 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> InsertAsync(TEntity entity)
+        public async Task<TEntity> ModifyAsync(TEntity entity)
         {
              _dbSet.Attach(entity);
             _context.ChangeTracker.TrackGraph(entity, e => ApplyState(e.Entry));
@@ -49,28 +49,6 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
         private static void ApplyState(EntityEntry entry)
         {
             entry.State = entry.Property("Id").CurrentValue.Equals(0) ? EntityState.Added : EntityState.Modified;
-        }
-
-        public async Task<TEntity> UpdateAsync(int id, TEntity entity)
-        {
-            _dbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (await GetByKeyAsync(id) != null)
-                {
-                    throw;
-                }
-
-                return null;
-            }
-
-            return entity;
         }
 
         public async Task<TEntity> DeleteAsync(int id)

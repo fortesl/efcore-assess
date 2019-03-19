@@ -1,6 +1,6 @@
 ﻿namespace Fortes.Assess.Domain
 {
-    public class AssessmentUser
+    public class UserAssessment
     {
         public int AssessmentId { get; set; }
         public int UserId { get; set; }
