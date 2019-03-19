@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,20 +20,15 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, Object>>[] includeProperties)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(params Expression<Func<TEntity, Object>>[] includeProperties)
         {
-            return GetAllIncluding(includeProperties).ToList();
+            return await GetAllIncluding(includeProperties).ToListAsync();
         }
 
-        public IEnumerable<TEntity> GetAllBy(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<IEnumerable<TEntity>> GetAllByAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = GetAllIncluding(includeProperties);
-            return query.Where(predicate).ToList();
-        }
-
-        public TEntity GetByKey(int id)
-        {
-            return _dbSet.Find(id);
+            return await query.Where(predicate).ToListAsync();
         }
 
         public async Task<TEntity> GetByKeyAsync(int id)
@@ -40,41 +36,19 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             return await _dbSet.FindAsync(id);
         }
 
-        public void Insert(TEntity entity)
-        {
-            _dbSet.Add(entity);
-            _context.SaveChanges();
-        }
-
         public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            _dbSet.Add(entity);
+             _dbSet.Attach(entity);
+            _context.ChangeTracker.TrackGraph(entity, e => ApplyState(e.Entry));
+
             await _context.SaveChangesAsync();
 
             return entity;
         }
 
-
-        public TEntity Update(int id, TEntity entity)
+        private static void ApplyState(EntityEntry entry)
         {
-            _dbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
-            try
-            {
-                _context.SaveChanges();
-
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (GetByKey(id) != null)
-                {
-                    throw;
-                }
-
-                return null;
-            }
-
-            return entity;
+            entry.State = entry.Property("Id").CurrentValue.Equals(0) ? EntityState.Added : EntityState.Modified;
         }
 
         public async Task<TEntity> UpdateAsync(int id, TEntity entity)
@@ -96,18 +70,6 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
                 return null;
             }
 
-            return entity;
-        }
-
-        public TEntity Delete(int id)
-        {
-            var entity = GetByKey(id);
-            if (entity == null)
-            {
-                return null;
-            }
-            _dbSet.Remove(entity);
-            _context.SaveChanges();
             return entity;
         }
 

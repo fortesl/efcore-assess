@@ -14,11 +14,11 @@
 
     #endregion
 
-    public class AssessmentsController : BaseController
+    public class QuestionsController : BaseController
     {
         #region constructor
 
-        private readonly IRepository<Assessment> _repo;
+        private readonly IRepository<Question> _repo;
         private readonly ILogger _logger;
         private readonly IHttpContextAccessor _context;
 
@@ -26,17 +26,17 @@
 
         #region Public Methods
 
-        public AssessmentsController(IRepository<Assessment> repo, ILogger<AssessmentsController> logger, IHttpContextAccessor context)
+        public QuestionsController(IRepository<Question> repo, ILogger<QuestionsController> logger, IHttpContextAccessor context)
         {
             _logger = logger ?? throw new ArgumentNullException("logger is not defined!");
             _context = context ?? throw new ArgumentNullException("dbcontext is not defined");
-            _repo = repo ?? throw new ArgumentException("Assessment repository is not defined!");
+            _repo = repo ?? throw new ArgumentException("Question repository is not defined!");
 
             _logger.LogInformation($"Host: {_context.HttpContext.Request.Host} IsAuthenticated: {_context.HttpContext.User.Identity.IsAuthenticated}");
         }
 
         /// <summary>
-        /// GET: api/assessments
+        /// GET: api/questions
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -47,7 +47,7 @@
         }
 
         /// <summary>
-        /// GET: api/Assessments/id
+        /// GET: api/Questions/id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -56,54 +56,54 @@
         [ProducesResponseType(400)]
         public async Task<IActionResult> Get(int id)
         {
-            var assessment = await _repo.GetByKeyAsync(id);
-            if (assessment == null)
+            var question = await _repo.GetByKeyAsync(id);
+            if (question == null)
             {
-                _logger.LogWarning($"Get: assessment {id} not found");
+                _logger.LogWarning($"Get: question {id} not found");
                 return NotFound();
             }
-            return Ok(assessment);
+            return Ok(question);
         }
 
         /// <summary>
-        /// POST: api/assessments
+        /// POST: api/questions
         /// </summary>
-        /// <param name="assessment"></param>
+        /// <param name="question"></param>
         /// <returns></returns>
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Post([FromBody] Assessment assessment)
+        public async Task<IActionResult> Post([FromBody] Question question)
         {
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning($"Post: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
-            await _repo.InsertAsync(assessment);
+            await _repo.InsertAsync(question);
 
-            return CreatedAtAction("Post", new { id = assessment.Id }, assessment);
+            return CreatedAtAction("Post", new { id = question.Id }, question);
         }
 
         /// <summary>
-        /// PUT: api/assessments/id
+        /// PUT: api/questions/id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="assessment"></param>
+        /// <param name="question"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] Assessment assessment)
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] Question question)
         {
-            if (!ModelState.IsValid || id != assessment.Id)
+            if (!ModelState.IsValid || id != question.Id)
             {
                 _logger.LogWarning($"Put: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
 
-            var updated = await _repo.UpdateAsync(id, assessment);
+            var updated = await _repo.UpdateAsync(id, question);
             if (updated == null)
             {
                 return NotFound();
@@ -114,7 +114,7 @@
 
         
         /// <summary>
-        /// DELETE: api/assessments/id
+        /// DELETE: api/questions/id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

@@ -43,7 +43,7 @@ namespace Fortes.Assess.WebApi
                 .EnableSensitiveDataLogging()
                 .UseSqlServer(_configuration.GetValue<string>("ConnectionStrings:AzureAssessDb") ?? _configuration.GetValue<string>("ConnectionStrings:FortesAccessConnectionSeeded")));
 
-            services.AddScoped<IRepository<User>, Repository<User>>();
+            AddServices(services);
 
             services.AddCors();
 
@@ -87,6 +87,16 @@ namespace Fortes.Assess.WebApi
             });
 
             app.UseMvc();
+        }
+
+        private void AddServices(IServiceCollection services)
+        {
+
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<Question>, Repository<Question>>();
+            services.AddScoped<IRepository<Assessment>, Repository<Assessment>>();
+            services.AddScoped<IRepository<UserPage>, Repository<UserPage>>();
+            services.AddScoped<IRepository<AdminPage>, Repository<AdminPage>>();
         }
     }
 }
