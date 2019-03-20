@@ -13,7 +13,7 @@ namespace Fortes.Assess.Data.Repositories
 
         Task<TEntity> GetByKeyAsync(int id);
 
-        Task<TEntity> DeleteAsync(int id);
+        Task<TEntity> DeleteAsync(TEntity entity);
 
         Task<TEntity> ModifyAsync(TEntity entity);
     }

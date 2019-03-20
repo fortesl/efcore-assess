@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
-namespace Fortes.Assess.Data.Repositories.DisconnectedData 
+﻿namespace Fortes.Assess.Data.Repositories.DisconnectedData 
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading.Tasks;
+
     public class Repository<TEntity> : IRepository<TEntity> where TEntity: class
     {
         private readonly AssessDbContext _context;
@@ -51,16 +51,18 @@ namespace Fortes.Assess.Data.Repositories.DisconnectedData
             entry.State = entry.Property("Id").CurrentValue.Equals(0) ? EntityState.Added : EntityState.Modified;
         }
 
-        public async Task<TEntity> DeleteAsync(int id)
+        public async Task<TEntity> DeleteAsync(TEntity entity)
         {
-            var entity = await GetByKeyAsync(id);
-            if (entity == null)
+            _context.Entry(entity).State = EntityState.Deleted;
+            try
+            {
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch
             {
                 return null;
             }
-            _dbSet.Remove(entity);
-            await _context.SaveChangesAsync();
-            return entity;
         }
 
         private IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] includeProperties)

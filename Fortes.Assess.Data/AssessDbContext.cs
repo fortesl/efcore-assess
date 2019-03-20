@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Fortes.Assess.Data
 {
-    public class AssessDbContext : DbContext, IAssessDbContext
+    public partial class AssessDbContext : DbContext, IAssessDbContext
     {
-        private static string _connectionString;
-
         public static readonly LoggerFactory MyLoggerFactory
             = new LoggerFactory(new[]
             {
@@ -26,45 +24,7 @@ namespace Fortes.Assess.Data
         {
         }
 
-        public AssessDbContext(string connectionString)
-        {
-            if (!string.IsNullOrEmpty(connectionString) && !string.IsNullOrWhiteSpace(connectionString))
-            {
-                _connectionString = connectionString;
-            }                
-        }
-
-        #region dbsets
-        public DbSet<Assessment> Assessments { get; set; }
-        public DbSet<Field> Fields { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
-        public DbSet<Industry> Industries { get; set; }
-        public DbSet<Occupation> Occupations { get; set; }
-        public DbSet<Framework> Frameworks { get; set; }
-        public DbSet<Question> Questions { get; set; }
-        public DbSet<Level> Levels { get; set; }
-        public DbSet<QuestionType> QuestionTypes { get; set; }
-        public DbSet<Duration> Durations { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<AdminPage> AdminPages { get; set; }
-        public DbSet<UserPage> UserPages { get; set; }
-        #endregion
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured && !string.IsNullOrEmpty(_connectionString))
-            {
-                optionsBuilder
-                    .UseSqlServer(_connectionString)
-                    .EnableSensitiveDataLogging()
-                    .UseLoggerFactory(MyLoggerFactory);
-                base.OnConfiguring(optionsBuilder);
-            }
-
-        }
+        #region overrides
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -121,5 +81,6 @@ namespace Fortes.Assess.Data
             return await base.SaveChangesAsync();
         }
 
+        #endregion
     }
 }

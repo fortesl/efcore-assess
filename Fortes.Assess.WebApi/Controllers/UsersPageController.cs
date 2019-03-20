@@ -129,12 +129,17 @@
         [ProducesResponseType(404)]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid id {id}");
+                return BadRequest();
+            }
             if (!ModelState.IsValid)
             {
                 _logger.LogWarning($"Delete: BadRequest: - {ModelState}");
                 return BadRequest(ModelState);
             }
-            var deleted = await _repo.DeleteAsync(id);
+            var deleted = await _repo.DeleteAsync(new UserPage{ Id = id});
             if (deleted == null)
             {
                 _logger.LogWarning($"Delete: Not found {id}");
