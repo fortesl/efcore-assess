@@ -4,21 +4,16 @@ namespace Fortes.Assess.Domain
 {
     public class Question
     {
-        public Question()
-        {
-            ChoiceOptions = new List<ChoiceOption>();
-            QuestionAssessments = new List<AssessmentQuestion>();
-        }
         public int Id { get; set; }
-        public List<QuestionTag> QuestionTags { get; set; }
         public string CreatedBy { get; set; }
         public string Description { get; set; }
         public string Explanation { get; set; }
-        public Duration Duration { get; set; }
-        public Level Level { get; set; }
-        public QuestionType QuestionType { get; set; }
-        public List<ChoiceOption> ChoiceOptions { get; set; }
-        public List<AssessmentQuestion> QuestionAssessments { get; set; }
+        public virtual Duration Duration { get; set; }
+        public virtual Level Level { get; set; }
+        public virtual QuestionType QuestionType { get; set; }
+        public virtual ICollection<ChoiceOption> ChoiceOptions { get; set; } = new List<ChoiceOption>();
+        public virtual ICollection<AssessmentQuestion> QuestionAssessments { get; set; } = new List<AssessmentQuestion>();
+        public virtual ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>();
     }
 
     public class ChoiceOption

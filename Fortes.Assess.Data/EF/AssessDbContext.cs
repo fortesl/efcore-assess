@@ -1,12 +1,12 @@
-﻿using Fortes.Assess.Domain;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Fortes.Assess.Data
+namespace Fortes.Assess.Data.EF
 {
     public partial class AssessDbContext : DbContext, IAssessDbContext
     {
@@ -40,12 +40,6 @@ namespace Fortes.Assess.Data
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                //Shadow state properties
-                if (entityType.FindProperty("LastModified") == null)
-                {
-                    modelBuilder.Entity(entityType.Name).Property<DateTime>("LastModified").HasDefaultValue(DateTime.Now);
-                }
-
                 //ignore
                 modelBuilder.Entity(entityType.Name).Ignore("IsDirty");
             }
@@ -57,27 +51,11 @@ namespace Fortes.Assess.Data
 
         public override int SaveChanges()
         {
-            foreach (var entry in ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
-            {
-                if (entry.Property("LastModified") != null)
-                {
-                    entry.Property("LastModified").CurrentValue = DateTime.Now;
-                }
-            }
             return base.SaveChanges();
         }
 
         public async Task<int> SaveChangesAsync()
         {
-            foreach (var entry in ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
-            {
-                if (entry.Property("LastModified") != null)
-                {
-                    entry.Property("LastModified").CurrentValue = DateTime.Now;
-                }
-            }
             return await base.SaveChangesAsync();
         }
 

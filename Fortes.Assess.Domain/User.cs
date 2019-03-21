@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fortes.Assess.Domain
 {
-    public class User
+    public class User : EntityBase
     {
-        public User()
-        {
-            UserAssessments = new List<UserAssessment>();
-            UserRoles = new List<UserRole>();
-        }
-        public int Id { get; set; }
-        public string Name { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public string Email { get; set; }
         public int CompanyId { get; set; }
-        public List<UserRole> UserRoles { get; set; }
-        public List<UserAssessment> UserAssessments { get; set; }
-        public DateTime LastModified { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public virtual ICollection<UserAssessment> UserAssessments { get; set; } = new List<UserAssessment>();
     }
+
 }
+
