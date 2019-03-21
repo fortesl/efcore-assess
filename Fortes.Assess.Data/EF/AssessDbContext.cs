@@ -37,6 +37,8 @@ namespace Fortes.Assess.Data.EF
                 .HasKey(s => new {s.QuestionId, s.TagId});
             modelBuilder.Entity<UserRole>()
                 .HasKey(s => new { s.RoleId, s.UserId });
+            modelBuilder.Entity<User>()
+                .Ignore("Name");
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fortes.Assess.Domain
 {
-    public class User : EntityBase
+    public partial class User : EntityBase
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
@@ -12,6 +12,5 @@ namespace Fortes.Assess.Domain
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public virtual ICollection<UserAssessment> UserAssessments { get; set; } = new List<UserAssessment>();
     }
-
 }
 
