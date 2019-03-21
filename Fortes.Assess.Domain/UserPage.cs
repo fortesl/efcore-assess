@@ -1,8 +1,7 @@
 ﻿namespace Fortes.Assess.Domain
 {
-    public class UserPage
+    public class UserPage: EntityBase
     {
-        public int Id { get; set; }
         public int AssessmentId { get; set; }
         public string Title { get; set; }
         public string Header { get; set; }

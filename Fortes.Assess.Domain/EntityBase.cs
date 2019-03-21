@@ -1,4 +1,6 @@
-﻿namespace Fortes.Assess.Domain
+﻿using System;
+
+namespace Fortes.Assess.Domain
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -8,6 +10,8 @@
         public int Id { get; set; }
 
         [Timestamp]
-        public byte[] LastModified { get; set; }
+        public byte[] RowVersion { get; set; }
+
+        public DateTime? LastChanged { get; set; }
     }
 }

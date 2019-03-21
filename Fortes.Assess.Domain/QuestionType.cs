@@ -1,8 +1,7 @@
 ﻿namespace Fortes.Assess.Domain
 {
-    public class QuestionType
+    public class QuestionType : EntityBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

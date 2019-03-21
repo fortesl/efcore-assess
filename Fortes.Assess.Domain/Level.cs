@@ -1,8 +1,7 @@
 ﻿namespace Fortes.Assess.Domain
 {
-    public class Level
+    public class Level : EntityBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

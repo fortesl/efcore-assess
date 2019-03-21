@@ -53,14 +53,30 @@ namespace Fortes.Assess.Data.EF
 
         public override int SaveChanges()
         {
+            UpdateLastChanged();
             return base.SaveChanges();
         }
 
         public async Task<int> SaveChangesAsync()
         {
+            UpdateLastChanged();    
             return await base.SaveChangesAsync();
         }
 
         #endregion
+
+        private void UpdateLastChanged()
+        {
+            foreach (var entry in ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+            {
+                if (entry.Property("LastChanged") != null)
+                {
+                    entry.Property("LastChanged").CurrentValue = DateTime.Now;
+                }
+            }
+        }
+
+
     }
 }

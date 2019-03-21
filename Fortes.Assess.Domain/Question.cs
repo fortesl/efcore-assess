@@ -2,9 +2,8 @@
 
 namespace Fortes.Assess.Domain
 {
-    public class Question
+    public class Question : EntityBase
     {
-        public int Id { get; set; }
         public string CreatedBy { get; set; }
         public string Description { get; set; }
         public string Explanation { get; set; }
@@ -16,9 +15,8 @@ namespace Fortes.Assess.Domain
         public virtual ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>();
     }
 
-    public class ChoiceOption
+    public class ChoiceOption : EntityBase
     {
-        public int Id { get; set; }
         public int QuestionId { get; set; }
         public string Description { get; set; }
         public bool IsCorrect { get; set; }
