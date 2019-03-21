@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Fortes.Assess.Data.EF;
 
 namespace Fortes.Assess.Data.Repositories
 {

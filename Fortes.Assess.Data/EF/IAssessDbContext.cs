@@ -2,7 +2,7 @@
 using Fortes.Assess.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fortes.Assess.Data
+namespace Fortes.Assess.Data.EF
 {
     public interface IAssessDbContext
     {

@@ -1,4 +1,6 @@
-﻿namespace Fortes.Assess.Data.Repositories.DisconnectedData 
+﻿using Fortes.Assess.Data.EF;
+
+namespace Fortes.Assess.Data.Repositories.DisconnectedData 
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
