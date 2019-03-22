@@ -11,6 +11,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
+    using System.Collections.Generic;
 
     #endregion
 
@@ -42,7 +43,7 @@
         [ProducesResponseType(200)]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _repo.GetAllAsync());
+            return Ok(await _repo.GetAllAsync(u => u.UserRoles));
         }
 
         /// <summary>

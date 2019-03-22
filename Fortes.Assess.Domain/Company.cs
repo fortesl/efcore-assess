@@ -7,7 +7,7 @@ namespace Fortes.Assess.Domain
     {
         public string Name { get; set; }
         public int? IndustryId { get; set; }
-        public List<Assessment> Assessments { get; set; }
-        public List<User> Users { get; set; }
+        public virtual List<Assessment> Assessments { get; set; } = new List<Assessment>();
+        public virtual List<User> Users { get; set; } = new List<User>();
     }
 }

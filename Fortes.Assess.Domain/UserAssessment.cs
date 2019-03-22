@@ -4,8 +4,8 @@
     {
         public int AssessmentId { get; set; }
         public int UserId { get; set; }
-        public Role Role { get; set; }
-        public User User { get; set; }
-        public Assessment Assessment { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual User User { get; set; }
+        public virtual Assessment Assessment { get; set; }
     }
 }

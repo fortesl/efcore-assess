@@ -1,19 +1,20 @@
-﻿using Fortes.Assess.Data;
-using Fortes.Assess.Data.EF;
-using Fortes.Assess.Data.Repositories;
-using Fortes.Assess.Data.Repositories.DisconnectedData;
-using Fortes.Assess.Domain;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
-
-namespace Fortes.Assess.WebApi
+﻿namespace Fortes.Assess.WebApi
 {
+    using Fortes.Assess.Data.EF;
+    using Fortes.Assess.Data.Repositories;
+    using Fortes.Assess.Data.Repositories.DisconnectedData;
+    using Fortes.Assess.Domain;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Diagnostics;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
+    using Swashbuckle.AspNetCore.Swagger;
+
     public class Startup
     {
         private readonly IConfiguration _configuration;
@@ -38,17 +39,22 @@ namespace Fortes.Assess.WebApi
             /* For accessing current httpContext */
             services.AddHttpContextAccessor();
 
-
             services.AddDbContext<AssessDbContext>(options => options
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging()
+//                .UseLazyLoadingProxies()
+                .ConfigureWarnings(warnigs => warnigs.Throw(RelationalEventId
+                    .QueryClientEvaluationWarning))
                 .UseSqlServer(_configuration.GetValue<string>("ConnectionStrings:AzureAssessDb") ?? _configuration.GetValue<string>("ConnectionStrings:FortesAccessConnectionSeeded")));
 
             AddServices(services);
 
             services.AddCors();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .AddJsonOptions(options => options
+                    .SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

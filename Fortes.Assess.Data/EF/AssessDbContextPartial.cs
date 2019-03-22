@@ -1,8 +1,9 @@
-﻿using Fortes.Assess.Domain;
-using Microsoft.EntityFrameworkCore;
-
-namespace Fortes.Assess.Data.EF
+﻿namespace Fortes.Assess.Data.EF
 {
+    using Fortes.Assess.Domain;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+
     public partial class AssessDbContext : DbContext, IAssessDbContext
     {
         #region dbsets
@@ -23,5 +24,11 @@ namespace Fortes.Assess.Data.EF
         public DbSet<AdminPage> AdminPages { get; set; }
         public DbSet<UserPage> UserPages { get; set; }
         #endregion
+
+        public string GetTableName(Type type)
+        {
+            return Model.FindEntityType(type).SqlServer().TableName;
+        }
     }
+
 }

@@ -20,7 +20,7 @@ namespace Fortes.Assess.Domain
         public virtual Level Level { get; set; }
         public virtual Occupation Occupation { get; set; }
         public virtual Duration Duration { get; set; }
-        public virtual ICollection<AssessmentQuestion> AssessmentQuestions { get; set; } = new List<AssessmentQuestion>();
-        public virtual ICollection<UserAssessment> AssessmentUsers { get; set; } = new List<UserAssessment>();
+        public virtual List<AssessmentQuestion> AssessmentQuestions { get; set; } = new List<AssessmentQuestion>();
+        public virtual List<UserAssessment> AssessmentUsers { get; set; } = new List<UserAssessment>();
     }
 }

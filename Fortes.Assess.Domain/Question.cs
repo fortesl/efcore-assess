@@ -10,9 +10,9 @@ namespace Fortes.Assess.Domain
         public virtual Duration Duration { get; set; }
         public virtual Level Level { get; set; }
         public virtual QuestionType QuestionType { get; set; }
-        public virtual ICollection<ChoiceOption> ChoiceOptions { get; set; } = new List<ChoiceOption>();
-        public virtual ICollection<AssessmentQuestion> QuestionAssessments { get; set; } = new List<AssessmentQuestion>();
-        public virtual ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>();
+        public virtual List<ChoiceOption> ChoiceOptions { get; set; } = new List<ChoiceOption>();
+        public virtual List<AssessmentQuestion> QuestionAssessments { get; set; } = new List<AssessmentQuestion>();
+        public virtual List<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>();
     }
 
     public class ChoiceOption : EntityBase

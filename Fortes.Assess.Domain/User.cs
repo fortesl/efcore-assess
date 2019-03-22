@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Fortes.Assess.Domain
 {
@@ -9,8 +8,9 @@ namespace Fortes.Assess.Domain
         public string FirstName { get; set; }
         public string Email { get; set; }
         public int CompanyId { get; set; }
-        public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
-        public virtual ICollection<UserAssessment> UserAssessments { get; set; } = new List<UserAssessment>();
+        public virtual Company Company { get; set; }
+        public virtual List<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public virtual List<UserAssessment> UserAssessments { get; set; } = new List<UserAssessment>();
     }
 }
 
