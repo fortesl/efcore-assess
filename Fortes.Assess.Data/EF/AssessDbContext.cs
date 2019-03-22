@@ -59,6 +59,8 @@
                 .HasKey(s => new { s.RoleId, s.UserId });
             modelBuilder.Entity<User>()
                 .Ignore("Name");
+            modelBuilder.Entity<EntityBase>()
+                .Property(e => e.RowVersion).IsConcurrencyToken();
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
