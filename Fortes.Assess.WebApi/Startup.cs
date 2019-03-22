@@ -1,4 +1,6 @@
-﻿namespace Fortes.Assess.WebApi
+﻿using System;
+
+namespace Fortes.Assess.WebApi
 {
     using Fortes.Assess.Data.EF;
     using Fortes.Assess.Data.Repositories;
@@ -42,10 +44,17 @@
             services.AddDbContext<AssessDbContext>(options => options
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 .EnableSensitiveDataLogging()
-//                .UseLazyLoadingProxies()
+                //                .UseLazyLoadingProxies()
                 .ConfigureWarnings(warnigs => warnigs.Throw(RelationalEventId
                     .QueryClientEvaluationWarning))
-                .UseSqlServer(_configuration.GetValue<string>("ConnectionStrings:AzureAssessDb") ?? _configuration.GetValue<string>("ConnectionStrings:FortesAccessConnectionSeeded")));
+                .UseSqlServer(_configuration.GetValue<string>("ConnectionStrings:AzureAssessDb"),
+                    sqlServerOptionsAction: sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 2,
+                            maxRetryDelay: TimeSpan.FromSeconds(20),
+                            errorNumbersToAdd: null);
+                    }));
 
             AddServices(services);
 
